@@ -1,0 +1,45 @@
+<div class="modal" id="editPolicyModal" tabindex="-1" role="dialog" aria-labelledby="editPolicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editPolicyModalLabel">Edit Policy Details</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for :policy_info, url: edit_policy_path, method: :patch, id: "editPolicyForm" do |f| %>
+          <div style="display: grid; grid-template-columns: 3fr 7fr; grid-gap: 1em;">
+
+            <%= f.label :driver_factor, "Driver factor:" %>
+            <div style="display: grid; grid-template-columns: 1fr 2fr;">
+              <%= f.number_field :driver_factor, step: 0.001, value: @policy.driver_factor, class: 'form-control' %>
+            </div>
+
+            <%= f.label :lessor_name, 'Lessor name:' %>
+            <%= f.text_field :lessor_name, value: @policy.lessor_name, class: 'form-control' %>
+
+            <%= f.label :co_insured_first_name, 'Co-insured First name:' %>
+            <%= f.text_field :co_insured_first_name, value: @policy.co_insured_first_name, maxlength: 255, class: 'form-control' %>
+
+            <%= f.label :co_insured_last_name, 'Co-insured Last name:' %>
+            <%= f.text_field :co_insured_last_name, value: @policy.co_insured_last_name, maxlength: 255, class: 'form-control' %>
+
+            <% if @policy.billing_type === BROKER_BILL %>
+              <%= f.label :payment_method, 'Payment method:' %>
+              <%= f.select :payment_method, PAYMENT_METHOD_ARRAY , {selected: @policy.payment_method, value: @policy.payment_method}, class: 'form-control' %>
+
+              <%= f.label :unpaid_balance, 'Unpaid NSF Cheque Balance:' %>
+              <%= f.number_field :unpaid_balance, step: 0.01, value: @policy.unpaid_balance, class: 'form-control' %>
+            <% end %>
+
+            <%= f.hidden_field :id, value: @policy.id %>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="editPolicyModalSubmitButton" class="btn btn-success"><%= fa_icon("save", type: :solid, text: " Save Changes") %></button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

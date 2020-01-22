@@ -1,0 +1,124 @@
+<%= render 'shared/error_messages', object: @newapplication %>
+
+<%= form_for @newapplication, as: :newapplication, url: newapplication_step3_path do |f| %>
+
+  <!--  error notification goes here-->
+
+  <div class="button-wrapper">
+    <div>
+      <div>
+        <h1>New Auto Replacement Cost Policy - Insured and vehicle details</h1>
+        <br>
+      </div>
+      <div class="wrapper_1_1">
+        <div>
+
+          <div class="panel panel-default">
+            <div class="panel panel-heading" style="margin-bottom: 0;">
+              <h4>Insured's contact information</h4>
+              <hr>
+            </div>
+            <div class="panel panel-body">
+              <div style="display: grid; grid-template-columns: 1fr 2fr; grid-gap: 1em;">
+                <h5 style="font-weight: bold;">Insured type: </h5>
+                <h5><%= @newapplication.insured_type %></h5>
+
+                <h5 style="font-weight: bold;">Name: </h5>
+                <h5><%= "#{@newapplication.first_name} #{@newapplication.last_name}" %></h5>
+
+                <h5 style="font-weight: bold;">Address: </h5>
+                <h5><%= @newapplication.address %></h5>
+
+                <h5 style="font-weight: bold;">City: </h5>
+                <h5><%= @newapplication.city %></h5>
+
+                <h5 style="font-weight: bold;">Province: </h5>
+                <h5><%= @newapplication.province %></h5>
+
+                <h5 style="font-weight: bold;">Postal code: </h5>
+                <h5><%= @newapplication.postal_code %></h5>
+
+                <h5 style="font-weight: bold;">Phone: </h5>
+                <h5><%= @newapplication.phone %></h5>
+
+                <h5 style="font-weight: bold;">Email: </h5>
+                <h5><%= @newapplication.email %></h5>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <div>
+          <h4>Provide additional vehicle and policy details</h4>
+          <hr>
+
+          <div class="form_div">
+
+            <%= f.label :make, 'Make:' %>
+            <div style="display: grid; grid-template-columns: 1fr 8fr;">
+              <label for="make" style="margin-left: 0.1em;"><%= @newapplication.model_year || nil %></label>
+              <% if @newapplication.dealer_category === TESLA %>
+                <%= f.text_field :make, value: TESLA, class: 'form-control', disabled: true %>
+              <% else %>
+                <%= f.text_field :make, class: 'form-control', disabled: false %>
+              <% end %>
+            </div>
+
+            <%= f.label :model, 'Model:' %>
+            <%= f.text_field :model, class: 'form-control' %>
+
+            <%= f.label :vin, 'VIN:' %>
+            <%= f.text_field :vin, maxlength: 17, class: 'form-control'%>
+
+
+            <%= f.label :reg_num, 'Reg #' %>
+            <%= f.text_field :reg_num, maxlength: 8, data: { numeric: true }, class: 'form-control'%>
+
+            <%= f.label :lessor_name, 'Lessor name:' %>
+            <%= f.text_field :lessor_name, maxlength: 52, class: 'form-control' %>
+          </div>
+
+          <br>
+
+          <h4>Co-insured's details (optional)</h4>
+          <hr>
+
+          <div class="form_div" style=" grid-template-columns: 1fr 3fr;">
+            <%= f.label :co_insured_first_name, 'First name (optional):' %>
+            <%= f.text_field :co_insured_first_name, maxlength: 255, class: 'form-control' %>
+
+            <%= f.label :co_insured_last_name, 'Last name (optional):' %>
+            <%= f.text_field :co_insured_last_name, maxlength: 255, class: 'form-control' %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-2 btn-padding">
+          <button type="submit" name="commit" value="<< Previous" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-chevron-circle-left"></i>
+            Previous
+          </button>
+        </div>
+        <div class="col-md-2 btn-padding">
+          <button type="submit" name="commit" value="Next >>" class="btn btn-primary" style="width: 100%;">
+            Next
+            <i class="fas fa-chevron-circle-right"></i>
+          </button>
+        </div>
+        <div class="col-md-2 btn-padding">
+          <button type="submit" name="commit" value="Save" class="btn btn-secondary" data-confirm="Click 'OK' to confirm saving the application. This will direct you to the main page" style="width: 100%;">
+            <i class="fas fa-save"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

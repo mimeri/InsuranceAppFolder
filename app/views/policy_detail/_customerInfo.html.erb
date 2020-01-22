@@ -1,0 +1,35 @@
+<table class="table narrow-table">
+
+  <tr>
+    <td><b>Insured Name: </b></td>
+    <td><%= object.name %></td>
+  </tr>
+
+  <tr>
+    <td><b>Address: </b></td>
+    <td><%= object.address %></td>
+  </tr>
+
+  <tr>
+    <td><b>City / Province: </b></td>
+    <td><%= object.city  %>, <%= object.province %></td>
+  </tr>
+
+  <tr>
+    <td><b>Postal: </b></td>
+    <td><%= object.postal_code.upcase %></td>
+  </tr>
+
+  <tr>
+    <td><b>Phone: </b></td>
+    <td>
+      <%= format_phone(object.phone) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>Email address: </b></td>
+    <td><%= object.email %></td>
+  </tr>
+
+</table>

@@ -1,0 +1,29 @@
+<h4>Verify transaction details</h4>
+
+<table class="table">
+
+  <tr>
+    <td style="text-align: left;"><b>Issuing branch: </b></td>
+    <td style="text-align: left;"><%= get_broker_name(@new_application_params["broker_id"]) %></td>
+  </tr>
+
+  <tr>
+    <td style="text-align: left;"><b>Insured name: </b></td>
+    <td style="text-align: left;"><%= @new_application_params["first_name"] %><%= ' ' %><%= @new_application_params["last_name"] %></td>
+  </tr>
+
+  <tr>
+    <td style="text-align: left;"><b>Vehicle: </b></td>
+    <td style="text-align: left;"><%= @new_application_params["model_year"] %><%= ' ' %><%= @new_application_params["make"] %><%= ' ' %><%= @new_application_params["model"] %></td>
+  </tr>
+
+  <tr>
+    <td style="text-align: left;"><b>Coverage type: </b></td>
+    <td style="text-align: left;"><%= @new_application_params["coverage_type"] %></td>
+  </tr>
+
+  <tr>
+    <td style="text-align: left;"><b>Transaction type: </b></td>
+    <td style="text-align: left;">New</td>
+  </tr>
+</table>

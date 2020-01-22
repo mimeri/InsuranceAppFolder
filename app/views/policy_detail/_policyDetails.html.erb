@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-header">
+    <div style="display: grid; grid-template-columns: 5fr 3fr;">
+      <div>
+        <h4 class="card-title">
+          <a data-toggle="collapse" data-parent="#collapsePolicy" aria-expanded="true" aria-controls="collapsePolicy" href="#collapsePolicy">
+            <i class="fa fa-chevron-circle-up fa-lg"></i>
+            <i class="fa fa-chevron-circle-down fa-lg"></i>
+            Policy Details: <%= get_policy_details_header %>
+          </a>
+        </h4>
+      </div>
+
+      <div>
+        <% if @all_policies.count > 1 %>
+          <button style="float: right;" id="changePolicyModalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePolicyModal">
+            <%= fa_icon("exchange-alt", type: :solid, text: " Select a different policy by the same customer") %>
+          </button>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+<!--  to make collapsed by default remove "show" class here-->
+  <div id="collapsePolicy" class="card-body collapse show">
+    <%= render 'policy_detail/tabs/policyTabs' %>
+
+    <hr>
+
+    <button id="editPolicyModalButton" type="button" <%= enable_button(policy_is_active) %> class="btn btn-secondary" data-toggle="modal" data-target="#editPolicyModal">
+      <%= fa_icon("edit", type: :solid, text: " Edit Policy") %>
+    </button>
+
+    <div style="float: right;">
+
+      <button id="confirmTransferPolicyModalButton" type="button" <%= enable_button((policy_is_active and @policy.can_transfer)) %> class="btn btn-danger" data-toggle="modal" data-target="#confirmTransferPolicyModal">
+        <%= fa_icon("exchange-alt", type: :solid, text: " Transfer Policy") %>
+      </button>
+
+
+      <button id="confirmVoidPolicyModalButton" type="button" <%= enable_button((policy_is_active and @policy.can_void(@new_transaction.effective_date))) %> class="btn btn-danger" data-toggle="modal" data-target="#confirmVoidPolicyModal">
+        <%= fa_icon("ban", type: :solid, text: " Void Policy") %>
+      </button>
+
+
+      <button id="confirmCancelPolicyModalButton" type="button" <%= enable_button((policy_is_active and @policy.can_cancel)) %> class="btn btn-danger" data-toggle="modal" data-target="#confirmCancelPolicyModal">
+        <%= fa_icon("ban", type: :solid, text: " Cancel Policy") %>
+      </button>
+
+    </div>
+
+  </div>
+</div>

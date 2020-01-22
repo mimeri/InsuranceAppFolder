@@ -1,0 +1,91 @@
+<div style="text-align: right;">
+  <h4>Premiums and Fees:</h4>
+</div>
+
+<!--Variables-->
+<% coverage_type = policy.coverage_type %>
+<% coverage_premium = transaction.coverage_premium %>
+<% oem_body_parts_premium = transaction.oem_body_parts_premium  %>
+<% admin_fee = transaction.admin_fee %>
+<% dealer_fee = transaction.dealer_fee %>
+<% finance_admin_fee = transaction.finance_admin_fee %>
+<% total_premiums_and_fees = transaction.total_premium %>
+<% transferred_premium = policy.transferred_premium %>
+<% total = total_premiums_and_fees - transferred_premium %>
+<% amount_financed = 0 %>
+<% if policy.billing_type === DIRECT_BILL %>
+  <% amount_financed = total %>
+<% end %>
+<% owed = total - amount_financed %>
+
+<% is_refund = false %>
+<% if total < 0 %>
+  <% is_refund = true %>
+<% end %>
+
+<table class="table quickquote-table">
+  <tr>
+    <td style="text-align: right;"><%= coverage_type %> Insurance Premium: <%= DOLLAR_LABEL %> </td>
+    <td><%= '%.2f' % coverage_premium %></td>
+  </tr>
+
+  <tr>
+    <td><%= OEM_BODY_PARTS_PREMIUM_LABEL %> </td>
+    <td><%= '%.2f' % oem_body_parts_premium %></td>
+  </tr>
+
+  <tr>
+    <td><%= POLICY_FEE_LABEL %> </td>
+    <td><%= '%.2f' % (admin_fee + finance_admin_fee) %></td>
+  </tr>
+
+  <% if dealer_fee > 0 %>
+    <tr>
+      <td><%= DEALER_FEE_LABEL %> </td>
+      <td><%= '%.2f' % dealer_fee %></td>
+    </tr>
+  <% end %>
+
+  <tr class="thicker_border">
+    <td><b><%= TOTAL_PREMIUM_LABEL %> </b></td>
+    <td><b><%= '%.2f' % total_premiums_and_fees %></b></td>
+  </tr>
+
+  <tr>
+    <td><%= TRANSFERRED_PREMIUM_LABEL %> </td>
+    <td><%= '%.2f' % transferred_premium %></td>
+  </tr>
+
+  <tr class="thicker_border">
+    <% if is_refund %>
+      <td><b><%= TOTAL_REFUND_DUE_LABEL %> </b></td>
+      <td><b><%= '%.2f' % (total * -1) %></b></td>
+    <% else %>
+      <td><b><%= TOTAL_DUE_LABEL %> </b></td>
+      <td><b><%= '%.2f' % total %></b></td>
+    <% end %>
+  </tr>
+
+  <tr>
+    <td><%= AMOUNT_FINANCED_LABEL %> </td>
+    <td><%= '%.2f' % amount_financed %></td>
+  </tr>
+
+  <tr class="thicker_border" style="color: green;">
+    <% if is_refund %>
+      <td><b><%= REFUND_OWED_LABEL %> </b></td>
+      <td><b><%='%.2f' % (owed * -1) %></b></td>
+    <% else %>
+      <td><b><%= AMOUNT_OWED_LABEL %> </b></td>
+      <td><b><%='%.2f' % owed %></b></td>
+    <% end %>
+  </tr>
+
+  <% if monthly_payment.present? %>
+    <tr>
+      <td><%= MONTHLY_PAYMENT_LABEL %></td>
+      <td><%= '%.2f' % monthly_payment %></td>
+    </tr>
+  <% end %>
+
+</table>

@@ -1,0 +1,31 @@
+<div class="form-inline">
+
+  <%= form_for :search_policy_date_filter, url: filter_search_policy_path do |f| %>
+    <div class="form-inline">
+
+      <%= f.label :type, "Filter table by: " %>
+      <%= f.select :type, TRANSACTION_DATE_FILTERS, {selected: @filter_by}, class: 'form-control' %>
+
+      <div id="searchPolicyDateFields" style="margin-left: 10px;" class="form-inline">
+        <div class="input-group">
+          <%= f.text_field :start, data: {provide: 'datepicker'}, placeholder: "Start Date", value: @start_date, class: 'form-control', style: 'display: inline' %>
+          <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
+        </div>
+
+        <p>to</p>
+
+        <div class="input-group">
+          <%= f.text_field :end, data: {provide: 'datepicker'}, placeholder: "End Date", value: @end_date, class: 'form-control', style: 'display: inline' %>
+          <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-secondary" data-confirm="Setting this filter will reload the page and reset any other filters. Click Ok to continue"><%= fa_icon("filter", type: :solid, text: " Confirm Filter") %></button>
+
+      <%#= link_to fa_icon("undo", type: :solid, text: " Clear Filter"), search_policy_index_path, data: {turbolinks: false}, id: 'clearSearchPolicyFilterButton', class: 'btn btn-secondary' %>
+
+    </div>
+  <% end %>
+
+</div>
+

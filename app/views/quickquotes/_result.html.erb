@@ -1,0 +1,112 @@
+<% is_refund = false %>
+<% if @quickquote.total < 0 %>
+  <% is_refund = true %>
+<% end %>
+
+<%= hidden_field_tag :hidden, is_refund, "data-id" => 'is-refund' %>
+
+<table class="table quickquote-table">
+
+  <caption style="caption-side: top; text-align: right;">
+    <h4>Premiums and Fees:</h4>
+  </caption>
+
+  <tr>
+    <td><%= @quickquote.coverage_type %> Insurance Premium: <%= DOLLAR_LABEL %> </td>
+    <td><%= '%.2f' % @quickquote.premium_amount %></td>
+  </tr>
+
+  <tr>
+    <td><%= OEM_BODY_PARTS_PREMIUM_LABEL %> </td>
+    <td><%= '%.2f' % @quickquote.oem %></td>
+  </tr>
+
+  <tr>
+    <td><%= POLICY_FEE_LABEL %> </td>
+    <td><%= '%.2f' % @quickquote.admin_fees %></td>
+  </tr>
+
+  <% dealer_fee_val = @quickquote.dealer_fees %>
+  <% if dealer_fee_val > 0 %>
+    <tr>
+      <td><%= DEALER_FEE_LABEL %> </td>
+      <td><%= '%.2f' % @quickquote.dealer_fees %></td>
+    </tr>
+  <% end %>
+
+  <tr class="thicker_border">
+    <td><b><%= TOTAL_PREMIUM_LABEL %> </b></td>
+    <td><b><%= '%.2f' % @quickquote.total_premiums_and_fees %></b></td>
+  </tr>
+
+  <tr>
+    <td><%= TRANSFERRED_PREMIUM_LABEL %> </td>
+    <td><%= '%.2f' % @quickquote.get_transferred_premium %></td>
+  </tr>
+
+  <tr class="thicker_border">
+    <% if is_refund %>
+      <td ><b><%= TOTAL_REFUND_DUE_LABEL %> </b></td>
+      <td><b><%= '%.2f' % (@quickquote.total * -1) %></b></td>
+    <% else %>
+      <td><b><%= TOTAL_DUE_LABEL %>  </b></td>
+      <td><b><%= '%.2f' % @quickquote.total %></b></td>
+    <% end %>
+  </tr>
+
+  <tr>
+    <td><%= AMOUNT_FINANCED_LABEL %> </td>
+    <td><%= '%.2f' % @quickquote.amount_financed %></td>
+  </tr>
+
+  <tr class="thicker_border" style="color: green;">
+    <% if is_refund %>
+      <td><b><%= REFUND_OWED_LABEL %> </b></td>
+      <td><b><%='%.2f' % (@quickquote.owed * -1) %></b></td>
+    <% else %>
+      <td><b><%= AMOUNT_OWED_LABEL %>  </b></td>
+      <td><b><%='%.2f' % @quickquote.owed %></b></td>
+    <% end %>
+  </tr>
+
+  <% monthly_payment = @quickquote.monthly_payment %>
+  <%= hidden_field_tag :hidden, monthly_payment, "data-id" => 'monthly-payment' %>
+
+  <% if monthly_payment.present? and monthly_payment.is_a?(Float) %>
+    <tr>
+      <td><%= MONTHLY_PAYMENT_LABEL %></td>
+      <td><%= '%.2f' % monthly_payment %></td>
+    </tr>
+  <% end %>
+
+</table>
+
+<script type="text/javascript" charset="utf-8">
+  let is_refund_bool = $("[data-id='is-refund']").val() === "true";
+  let is_direct_bill_bool = $(billing_type_id).val() === "Direct Bill";
+
+  if (is_refund_bool){
+      if (is_direct_bill_bool){
+          $(billing_type_id).val('Broker Bill').change();
+          billing_type_val = "Broker Bill";
+          $(financing_term_id + ' option').remove();
+          financing_term_val = "";
+          $(newapplication_billing_type_id).val(billing_type_val).change();
+          $(newapplication_financing_term_id).val(financing_term_val).change();
+          $(".financing_term").hide();
+          step2_submit_form();
+      }
+      document.getElementById("quickquote_billing_type").disabled=true;
+  }
+  else{
+      document.getElementById("quickquote_billing_type").disabled=false;
+  }
+
+  monthly_payment = $("[data-id='monthly-payment']").val();
+
+  $("#newapplication_monthly_payment").val(monthly_payment).change();
+
+</script>
+
+
+

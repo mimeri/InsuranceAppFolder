@@ -1,0 +1,70 @@
+<!--Variables-->
+<% dealer_fee = transaction.dealer_fee %>
+<% billing_type = policy.billing_type %>
+
+<!--Upper table-->
+<table class="table smaller" style="text-align: right; float: right;">
+  <!--Title of table-->
+
+  <caption style="caption-side: top; padding: 0;">
+    <h4 class="smaller" style="text-align: right;">Premiums and Fees - Cancellation</h4>
+  </caption>
+  <tr>
+    <td><%= policy.coverage_type %> Insurance Premium: <%= DOLLAR_LABEL %> </td>
+    <td><%= '%.2f' % transaction.coverage_premium %></td>
+  </tr>
+
+  <tr>
+    <td><%= OEM_BODY_PARTS_PREMIUM_LABEL %> </td>
+    <td><%= '%.2f' % transaction.oem_body_parts_premium %></td>
+  </tr>
+
+  <tr>
+    <td><%= POLICY_FEE_LABEL %> </td>
+    <td><%= '%.2f' % (transaction.admin_fee + transaction.finance_admin_fee) %></td>
+  </tr>
+
+  <% if dealer_fee > 0 %>
+    <tr>
+      <td><%= DEALER_FEE_LABEL %> </td>
+      <td><%= '%.2f' % dealer_fee %></td>
+    </tr>
+  <% end %>
+
+  <tr class="thicker_border">
+    <td><b><%= TOTAL_PREMIUM_LABEL %> </b></td>
+    <td><b><%= '%.2f' % transaction.total_premium %></b></td>
+  </tr>
+
+  <% amount_retained = transaction.total_premium - amount_refunded %>
+  <% amount_refunded -= unpaid_balance %>
+
+  <tr class="thicker_border">
+    <td class="text-danger"><b><%= EARNED_PREMIUM_LABEL %></b></td>
+    <td class="text-danger"><b><%= '%.2f' % amount_retained %></b></td>
+  </tr>
+
+  <% if unpaid_balance > 0 %>
+    <% unpaid_balance_label = UNPAID_BALANCE_LABEL %>
+    <% if billing_type === BROKER_BILL %>
+      <% unpaid_balance_label = UNPAID_NSF_BALANCE_LABEL %>
+    <% end %>
+    <tr>
+      <td class="text-danger"><b><%= unpaid_balance_label %></b></td>
+      <td class="text-danger"><b><%= '%.2f' % unpaid_balance %></b></td>
+    </tr>
+  <% end %>
+
+  <% refund_label = REFUND_OWED_LABEL %>
+  <% if amount_refunded < 0 %>
+    <% refund_label = AMOUNT_OWED_LABEL %>
+  <% elsif billing_type === BROKER_BILL and is_transfer %>
+    <% refund_label = CREDIT_OWED_LABEL %>
+  <% end %>
+
+  <tr class="text-success">
+    <td><b><%= refund_label %> </b></td>
+    <td><b><%= '%.2f' % amount_refunded.abs %></b></td>
+  </tr>
+
+</table>

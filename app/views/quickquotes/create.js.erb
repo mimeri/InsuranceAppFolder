@@ -1,0 +1,19 @@
+success_msg = '#quickquote_success_msg';
+error_msg = '#quickquote_error_msg';
+result_div = '#quickquote_result';
+$(success_msg).empty();
+$(result_div).empty();
+$(result_div).removeClass('center');
+$(result_div).append("<%= j render 'quickquotes/result' %>");
+<% if @quickquote.valid? %>
+  $(error_msg).empty();
+  $(success_msg).show();
+  $(success_msg).append("Quote successfully received");
+  $(success_msg).addClass('alert alert-success');
+  $('#step2NextButton').prop('disabled',false);
+  setTimeout(function() {
+      $(success_msg).hide();
+  }, 1500);
+<% else %>
+  $(error_msg).html(" <%= j render 'shared/error_messages', object: @quickquote %>");
+<% end %>

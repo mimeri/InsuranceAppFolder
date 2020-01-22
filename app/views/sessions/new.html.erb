@@ -1,0 +1,42 @@
+<%= stylesheet_link_tag 'sessions' %>
+
+<% provide(:title, "Broker Log in") %>
+
+<div style="min-width: 770px; max-width: 770px;">
+  <div>
+    <%= form_for(:session, url: login_path) do |f| %>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr;">
+        <%= image_tag("Hayward_Insurance_Logo.png", alt: "Hayward Insurance") %>
+<!--        <h1 style="text-align: right; align-self: end;">Broker Log in</h1>-->
+      </div>
+
+      <br>
+
+      <div style="border: 1px solid black; padding: 20px; background-color: white;">
+        <%= f.label :username %>
+        <%= f.text_field :username, class: 'form-control' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <% if false %>
+          <%= f.label :remember_me, class: "checkbox inline" do %>
+            <%= f.check_box :remember_me %>
+            <span>Remember me on this computer</span>
+          <% end %>
+        <% end %>
+
+        <br>
+
+        <button type="submit" name="commit" value="Log in" class="btn btn-primary" data-disable-with="<i class='fas fa-sync fa-spin'></i> Signing in..." style="width: 25%;">
+          <i class="fas fa-sign-in-alt"></i>
+          Log In
+        </button>
+
+      </div>
+    <% end %>
+  </div>
+  <div>
+  </div>
+</div>

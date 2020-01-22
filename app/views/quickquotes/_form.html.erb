@@ -1,0 +1,58 @@
+<%= form_with(model: @quickquote) do |f| %>
+
+  <h4>Vehicle Details:</h4>
+  <hr>
+
+  <div class="form_div">
+    <div><%= f.label :model_year, 'Model year:' %></div>
+    <div><%= f.select :model_year, ((Date.current.year-10)..(Date.current.year+1)).to_a.reverse, {selected: Date.current.year}, class: 'form-control' %></div>
+    <div><%= f.label :vehicle_price, 'Vehicle price ($):' %></div>
+    <div><%= f.number_field :vehicle_price, value: 45000, class: 'form-control' %></div>
+    <div>Dealer category: </div>
+    <div>
+      <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+        <%= f.radio_button :dealer_category, NOT_TESLA, checked: true, class: 'custom-control-input' %>
+        <label class="custom-control-label form-control" for="quickquote_dealer_category_not_tesla" >Other dealer</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+        <%= f.radio_button :dealer_category, TESLA, checked: false, class: 'custom-control-input' %>
+        <label class="custom-control-label form-control" for="quickquote_dealer_category_tesla">Tesla</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+        <%= f.radio_button :dealer_category, PRIVATE_SALE, checked: false, class: 'custom-control-input' %>
+        <label class="custom-control-label form-control" for="quickquote_dealer_category_private_sale">No dealer</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+        <%= f.radio_button :dealer_category, OUT_OF_PROVINCE, checked: false, class: 'custom-control-input' %>
+        <label class="custom-control-label form-control" for="quickquote_dealer_category_out_of_province">Out of province</label>
+      </div>
+    </div>
+    <%= f.hidden_field :transferred_premium, value: 0 %>
+  </div>
+
+  <div style="padding: 5px;"></div>
+
+  <h4>Coverage Details:</h4>
+  <hr>
+
+  <div class="form_div">
+    <%= f.label :coverage_type, 'Coverage type:'%>
+    <%= f.select :coverage_type, [FULL_REPLACEMENT,LIMITED_DEPRECIATION], {}, class: 'form-control'%>
+    <%= f.label :policy_term, 'Policy term:'%>
+    <%= f.select :policy_term, ['5 years','4 years','3 years','2 years'], {}, class: 'form-control' %>
+    <%= f.label :oem_body_parts, 'OEM Body Parts:'%>
+    <%= f.select :oem_body_parts, [NOT_ELIGIBLE,YES_3_YEARS,YES_2_YEARS], {}, class: 'form-control' %>
+    <%= f.label :billing_type,'Billing type:'%>
+    <%= f.select :billing_type, ['Broker Bill','Direct Bill'], {}, class: 'form-control' %>
+    <%= f.label :financing_term,'Financing term:', class: 'financing_term'%>
+    <%= f.select :financing_term, ['dummy'], {}, class: 'form-control financing_term'  %>
+  </div>
+
+  <div style="padding: 5px;"></div>
+
+  <button id="getQuoteSubmitButton" type="submit" name="commit" value="Get Quote" data-disable-with="<i class='fas fa-sync fa-spin'></i> Getting quote..." class="btn btn-primary" style="width: 100%;">
+    <i class="fas fa-search-dollar fa-lg"></i>
+    Get Quote
+  </button>
+
+<% end %>

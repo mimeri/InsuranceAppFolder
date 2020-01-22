@@ -1,0 +1,121 @@
+<%= javascript_include_tag 'newapplication_step1' %>
+<% provide(:title, "New policy - step 1 of 4") %>
+
+<%= render 'shared/error_messages', object: @newapplication %>
+
+<%= form_for @newapplication, as: :newapplication, url: url, id: "newapplication_step1_form" do |f| %>
+  <div class="button-wrapper">
+    <div>
+      <div>
+        <h1>New Auto Replacement Cost Policy - General Info</h1>
+        <br>
+      </div>
+
+      <div class="wrapper_1_1">
+        <div>
+          <h4>Branch and insured details:</h4>
+          <hr>
+          <div class="form_div">
+            <%= f.label :broker_id, "Broker: " %>
+            <% if is_transferred %>
+              <%= f.select :broker_id, [[get_broker_name(@newapplication.broker_id),@newapplication.broker_id]], {}, class: 'form-control' %>
+            <% else %>
+              <%= f.select :broker_id, options_from_collection_for_select(@broker, :id, :name, selected: @newapplication.broker_id || nil), {}, class: 'form-control' %>
+            <% end %>
+
+            <%= f.label :driver_factor, "Driver factor:" %>
+            <div style="display: grid; grid-template-columns: 1fr 2fr;">
+              <%= f.number_field :driver_factor, step: 0.001, class: 'form-control' %>
+            </div>
+          </div>
+          <br>
+          <h4>Dealership details:</h4>
+          <hr>
+          <div class="form_div">
+            <div>Dealer category: </div>
+            <div class="row">
+              <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+                <%= f.radio_button :dealer_category, NOT_TESLA, checked: is_checked(@newapplication.dealer_category,NOT_TESLA), class: 'custom-control-input' %>
+                <label class="custom-control-label form-control" for="newapplication_dealer_category_not_tesla" >Other dealer</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+                <%= f.radio_button :dealer_category, TESLA, checked: is_checked(@newapplication.dealer_category,TESLA), class: 'custom-control-input' %>
+                <label class="custom-control-label form-control" for="newapplication_dealer_category_tesla">Tesla</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+                <%= f.radio_button :dealer_category, PRIVATE_SALE, checked: is_checked(@newapplication.dealer_category,PRIVATE_SALE), class: 'custom-control-input' %>
+                <label class="custom-control-label form-control" for="newapplication_dealer_category_private_sale">No dealer</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline" style="margin-right: 4px;">
+                <%= f.radio_button :dealer_category, OUT_OF_PROVINCE, checked: is_checked(@newapplication.dealer_category,OUT_OF_PROVINCE), class: 'custom-control-input' %>
+                <label class="custom-control-label form-control" for="newapplication_dealer_category_out_of_province">Out of province</label>
+              </div>
+            </div>
+
+            <%= f.label :dealer, 'Selling dealer:', class: "dealer" %>
+            <%= f.text_field :dealer, data: {autocomplete_source: dealers_list_index_path}, value: @newapplication.dealer || nil, class: 'form-control dealer' %>
+          </div>
+        </div>
+
+        <div>
+          <h4>Vehicle details:</h4>
+          <hr>
+
+          <div class="form_div">
+            <%= f.label :model_year, 'Model year:' %>
+            <%= f.select :model_year, ((Date.current.year-10)..(Date.current.year+1)).to_a.reverse, {selected: @newapplication.model_year || Date.current.year}, {class: 'form-control'} %>
+
+            <%= f.label :purchase_date, 'Purchase date:' %>
+            <div>
+              <%= f.date_select :purchase_date, {order: [:month, :day, :year], use_short_month: true, selected: @newapplication.purchase_date || Date.current}, {class: 'form-control', style: 'float: left; width: 155px;'} %>
+            </div>
+
+            <%= f.label :vehicle_price, 'Vehicle price ($):' %>
+            <%= f.number_field :vehicle_price, selected: @newapplication.vehicle_price || nil, class: 'form-control'%>
+
+            <%= f.label :odometer, 'Odometer (km):'%>
+            <%= f.number_field :odometer, selected: @newapplication.odometer || nil, class: 'form-control'%>
+
+            <%= f.label :use_rate_class, 'Use rate class:' %>
+            <%= f.select :use_rate_class, ['001 - PLEASURE USE',
+                                           '002 - OVER 15 km TO WORK',
+                                           '003 - UNDER 15 km TO WORK',
+                                           '004 - P/T PUBLIC TRANSIT',
+                                           '007 - BUSINESS USE',
+                                           '011 - FARM USE',
+                                           '012 - ARTISAN USE',
+                                           '014 - FISHER USE'], {prompt: '(select)', selected: @newapplication.use_rate_class || nil}, {class: 'form-control'} %>
+
+            <%= f.label :gvw, 'GVW (kg):', class: 'gvw' %>
+            <%= f.number_field :gvw, selected: @newapplication.gvw || nil, class: 'form-control gvw' %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="wrapper_1_1">
+      <div></div>
+      <div class="row">
+        <div class="col-md-4 btn-padding"></div>
+        <div class="col-md-4 btn-padding">
+          <button type="submit" name="commit" value="Next >>" class="btn btn-primary" style="width: 100%;">
+            Next
+            <i class="fas fa-chevron-circle-right"></i>
+          </button>
+        </div>
+        <div class="col-md-4 btn-padding">
+          <button type="submit" name="commit" value="Save" class="btn btn-secondary" data-confirm="Click 'OK' to confirm saving the application. This will direct you to the main page" style="width: 100%;">
+            <i class="fas fa-save"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Step 1</div>
+</div>

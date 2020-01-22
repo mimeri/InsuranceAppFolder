@@ -1,0 +1,57 @@
+<%= form_for :printpdf, url: printpdf_path, method: 'patch', id: "printFormsForm" do |f| %>
+
+  <%= f.hidden_field :id, value: object.id %>
+
+  <% disabled_bool = !(object.is_cancelled or object.is_transferred) %>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <strong style="font-size: 16px;">Current Certificate of Insurance</strong>
+      <br>
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :broker_check, checked: disabled_bool,  class: "form-check-input move-left" %>Broker's copy</label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :insured_check, checked: disabled_bool, class: "form-check-input move-left" %>Insured's copy</label>
+      </div>
+      <br>
+    </div>
+    <div class="col-lg-6">
+      <strong style="font-size: 16px;"> Current Certificate of Cancellation</strong>
+      <br>
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :cancellation_broker_check, checked: !disabled_bool, disabled: disabled_bool, class: "form-check-input move-left"%>Broker's copy</label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :cancellation_insured_check, checked: !disabled_bool, disabled: disabled_bool, class: "form-check-input move-left"%>Insured's copy</label>
+      </div>
+      <br>
+    </div>
+
+    <div class="col-lg-6">
+      <strong style="font-size: 16px;"> Other Documents</strong>
+      <br>
+      <% billing_type = object.billing_type %>
+      <% if billing_type === DIRECT_BILL %>
+        <div class="form-check">
+          <label class="form-check-label"><%= f.check_box :financing_contract_form, checked: false, disabled: (billing_type === BROKER_BILL), class: "form-check-input move-left"%>Financing Contract</label>
+        </div>
+      <% end %>
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :release_of_interest, checked: false, disabled: disabled_bool, class: "form-check-input move-left"%>Release of Interest</label>
+      </div>
+      <br>
+    </div>
+
+  </div>
+
+  <div class="modal-footer" style="display: grid; grid-template-columns: 2fr 1fr 2fr; grid-gap: 1em;">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <div></div>
+    <button id="printFormsModalSubmitButton" formtarget="_blank" class="btn btn-success"><%= fa_icon("print", type: :solid, text: " Print") %></button>
+  </div>
+
+<% end %>
+
+
+

@@ -1,0 +1,96 @@
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(433px, 1fr)); grid-column-gap: 1em;">
+  <div>
+    <table class="table narrow-table">
+      <h2>Vehicle Details</h2>
+      <tr>
+        <td><b>Vehicle: </b></td>
+        <td><%= @policy.model_year %> <%= @policy.make %> <%= @policy.model %></td>
+      </tr>
+
+      <tr>
+        <td><b>VIN </b></td>
+        <td><%= @policy.vin.upcase %></td>
+      </tr>
+
+      <tr>
+        <td><b>Registration number: </b></td>
+        <td><%= @policy.reg_num %></td>
+      </tr>
+
+      <tr>
+        <td><b>Odometer reading: </b></td>
+        <td><%= @policy.odometer %> km</td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table class="table narrow-table">
+      <h2>Purchase Details</h2>
+      <tr>
+        <td><b>Purchase date: </b></td>
+        <td><%= @policy.purchase_date.strftime("%b %-d, %Y")  %></td>
+      </tr>
+
+      <tr>
+        <td><b>Purchase price: </b></td>
+        <td>$ <%= @policy.vehicle_price %></td>
+      </tr>
+
+      <% dealer_category = @policy.dealer_category %>
+      <tr>
+        <td><b>Selling dealer category: </b></td>
+        <td><%= dealer_category %></td>
+      </tr>
+
+      <% if dealer_category === TESLA or dealer_category === NOT_TESLA %>
+        <tr>
+          <td><b>Selling dealer name: </b></td>
+          <td><%= @policy.dealer %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div>
+    <table class="table narrow-table">
+      <h2>Insurance Details</h2>
+      <tr>
+        <td><b>Use Rate class: </b></td>
+        <td><%= @policy.use_rate_class %></td>
+      </tr>
+
+      <tr>
+        <td><b>Driver factor: </b></td>
+        <td><%= '%.3f' % @policy.driver_factor %></td>
+      </tr>
+
+      <% if @policy.gvw.present? %>
+        <tr>
+          <td><b>GVW: </b></td>
+          <td><%= @policy.gvw %> kg</td>
+        </tr>
+      <% end %>
+
+      <% if @policy.lessor_name.present? %>
+        <tr>
+          <td><b>Lessor name: </b></td>
+          <td><%= @policy.lessor_name %></td>
+        </tr>
+      <% end %>
+
+      <% if @policy.co_insured_first_name.present? or @policy.co_insured_last_name.present? %>
+        <tr>
+          <td><b>Co-insured: </b></td>
+          <td>
+            <% co_insured_full_name = "" %>
+            <% co_insured_full_name += @policy.co_insured_first_name unless @policy.co_insured_first_name.blank? %>
+            <% if @policy.co_insured_first_name.present? and @policy.co_insured_last_name.present? %>
+              <% co_insured_full_name += " " %>
+            <% end %>
+            <% co_insured_full_name += @policy.co_insured_last_name unless @policy.co_insured_last_name.blank? %>
+            <%= co_insured_full_name %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="modal" id="confirmSameNameModal" tabindex="-1" role="dialog" aria-labelledby="confirmSameNameModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirmSameNameModalLabel">
+          <%= fa_icon "exclamation-triangle", color: "Orange", size: "lg" %>
+          Warning! A customer with the full name <b><%= link_to name, policy_detail_path(id: policy_id_with_same_name), data: {turbolinks: false}, style: "color: red" %></b> already exists in the system.
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="margin: 0;">
+          Please ensure that the applicant does not already have a policy with Hayward Insurance Services.
+        </p>
+        <br>
+        <p style="margin: 0;">
+          If they already have a policy with Hayward Insurance, please create a new application for this applicant through their policy detail page.
+          Click <%= link_to "Here", search_policy_index_path %> to visit the Search Transactions page.
+        </p>
+        <br>
+        <p style="margin: 0;">
+          If they do not already have a policy with Hayward Insurance, click "Confirm Bind policy" to continue to bind the application.
+        </p>
+        <br>
+        <div class="modal-footer" style="display: grid; grid-template-columns: 2fr 1fr 2fr; grid-gap: 1em;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div></div>
+          <button id="confirmSameNameModalSubmitButton" class="btn btn-success"><%= fa_icon("check-circle", type: :solid, text: " Confirm Bind policy") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

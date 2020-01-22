@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header">
+    <div style="display: grid; grid-template-columns: 3fr 1fr;">
+      <div>
+        <h4 class="card-title">
+          <a data-toggle="collapse" data-parent="#collapseModification<%= object.id.to_s %>" aria-expanded="false" aria-controls="collapseModification<%= object.id.to_s %>" href="#collapseModification<%= object.id.to_s %>">
+            <i class="fa fa-chevron-circle-up fa-lg"></i>
+            <i class="fa fa-chevron-circle-down fa-lg"></i>
+            <% type_string = "" %>
+            <% if object.item_type === Transaction.model_name.name %>
+              <% if object.reify.transaction_type === "new" %>
+                <% type_string += "New policy" %>
+              <% elsif object.reify.transaction_type === CANCELLED  %>
+                <% type_string += "Cancellation" %>
+              <% end %>
+            <% end %>
+            <% whodunnit = get_user_name(object.whodunnit) %>
+            <% if whodunnit.blank? %>
+              <% whodunnit = "ADMIN ACTION" %>
+            <% end %>
+            <%= type_string %> <%= object.item_type.capitalize %> table modified at <%= object.created_at.strftime("%b %-d, %Y %R") %> by <%= whodunnit %>
+          </a>
+        </h4>
+      </div>
+      <div>
+        <%= render 'modifications/printModificationForm', object: object %>
+      </div>
+    </div>
+  </div>
+  <div id="collapseModification<%= object.id.to_s %>" class="card-body collapse">
+    <% model_name_array = [Customer.model_name.name,Policy.model_name.name,Transaction.model_name.name] %>
+    <% model_name_array.each do |model_name| %>
+      <% if object.item_type === model_name %>
+        <% if object.item_type === Customer.model_name.name %>
+          <% object_current = @policy.customer %>
+          <% field_array = ["insured_type","first_name","last_name","address","city","province","postal_code","phone","email"] %>
+        <% elsif object.item_type === Policy.model_name.name %>
+          <% object_current = @policy %>
+          <% field_array = ["model_year","make","model","vin","reg_num","odometer","purchase_date","vehicle_price","dealer_category",
+                            "dealer","use_rate_class","gvw","driver_factor","lessor_name","co_insured_first_name","co_insured_last_name",
+                            "coverage_type","policy_term","oem_body_parts","billing_type","financing_term","payment_method","transferred_premium",
+                            "printed_agent_comments","customer_id","transferred_id","broker_id"] %>
+        <% else %>
+          <% field_array = ["effective_date","expiry_date","transaction_reason","agent_comments","coverage_premium","oem_body_parts_premium",
+                            "dealer_fee","admin_fee","finance_admin_fee","total_premium","policy_id","user_id"] %>
+          <% if object.reify.transaction_type === "new" %>
+            <% object_current = @new_transaction %>
+          <% elsif object.reify.transaction_type === CANCELLED %>
+            <% object_current = @cancelled_transaction %>
+          <% end %>
+        <% end %>
+        <%= render 'modifications/modificationTable', object: object, object_current: object_current, field_array: field_array %>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>
+<br>

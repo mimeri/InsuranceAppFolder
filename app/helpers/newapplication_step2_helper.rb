@@ -1,0 +1,2 @@
+module NewapplicationStep2Helper
+end

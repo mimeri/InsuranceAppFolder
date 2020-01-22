@@ -1,0 +1,8 @@
+result_div = "#cancel_quote_result";
+$(result_div).empty();
+$(result_div).removeClass('center');
+$(result_div).html("<%= j render 'policy_detail/cancellationQuote', policy: @policy,
+                                                                    transaction: @new_transaction,
+                                                                    is_transfer: false,
+                                                                    amount_refunded: @amount_refunded,
+                                                                    unpaid_balance: @unpaid_balance %>");

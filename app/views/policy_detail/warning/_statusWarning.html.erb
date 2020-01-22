@@ -1,0 +1,26 @@
+<% if (policy.is_bound === false) or (Date.current > @new_transaction.expiry_date) or (Date.current < @new_transaction.effective_date)  %>
+  <% msg = "This policy has" %>
+  <% if policy.is_bound and (Date.current < @new_transaction.effective_date) %>
+    <% msg += " not yet gone into effect" %>
+  <% elsif policy.is_cancelled %>
+    <% msg += " been cancelled" %>
+  <% elsif policy.is_void %>
+    <% msg += " been voided" %>
+  <% elsif policy.is_transferred %>
+    <% msg += " been transferred to policy with ID: " %>
+  <% elsif policy.is_expired %>
+    <% msg += " #{EXPIRED}" %>
+  <% end %>
+
+  <div class="card bg-warning">
+    <div class="card-body" style="padding: 5px;">
+      <p style="color: red; margin: 0;">
+        <%= msg %>
+        <% if transferred_to.present? %>
+          <%= link_to transferred_to, policy_detail_path(id: transferred_to), target: :_blank %> and is effectively cancelled
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <br>
+<% end %>

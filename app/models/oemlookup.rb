@@ -1,0 +1,2 @@
+class Oemlookup < ApplicationRecord
+end

@@ -1,0 +1,38 @@
+<div class="modal" id="confirmVoidPolicyModal" tabindex="-1" role="dialog" aria-labelledby="confirmVoidPolicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirmVoidPolicyModalLabel">Confirm voiding of policy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 18px;"><%= fa_icon "exclamation-triangle", color: "Orange", size: "lg" %>Warning: this action cannot be undone</div>
+        <br>
+        <div>Voiding a policy will cancel the policy. It is best to choose this action if no payments have yet been made.</div>
+        <br>
+        <% if @original_transferred.present? %>
+          <div style="font-style: italic;">
+            Note: This policy was created via transfer from another policy. Click <%= link_to "Here", policy_detail_path(id: @original_transferred.id) %> to view the policy that will be restored if this policy is voided.
+          </div>
+          <br>
+        <% end %>
+        <%= form_for :void_policy, url: void_policy_path, method: :delete, id: "confirmVoidPolicyForm" do |f| %>
+          <%= f.hidden_field :id, value: @policy.id %>
+
+          <%= f.label :agent_comments, 'Agent comments (additional explanation for voiding of policy):' %>
+          <%= f.text_area :agent_comments, size: "24x6", class: 'form-control' %>
+          <br>
+          <div style="font-size: 18px;">Are you sure you wish to void this policy?</div>
+          <br>
+          <div class="modal-footer" style="display: grid; grid-template-columns: 2fr 1fr 2fr; grid-gap: 1em;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Keep Policy</button>
+            <div></div>
+            <button id="confirmVoidPolicyModalSubmitButton" class="btn btn-danger"><%= fa_icon("ban", type: :solid, text: " Yes, Void Policy") %></button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

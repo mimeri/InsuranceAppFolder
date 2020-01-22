@@ -1,0 +1,14 @@
+<h1>Modifications for Policy ID: <%= @policy.id %></h1>
+<br>
+<div>
+  <%= link_to fa_icon("arrow-circle-left", type: :solid, text: " Back to Policy Details"), policy_detail_path(id: @policy.id), class: "btn btn-primary" %>
+</div>
+<br>
+<div>
+  <% versions_array = load_versions %>
+  <% versions_array.each do |v| %>
+    <%= render 'modifications/modificationCard', object: v %>
+  <% end %>
+</div>
+
+

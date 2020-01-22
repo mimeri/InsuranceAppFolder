@@ -1,0 +1,23 @@
+<div class="modal" id="confirmBindModal" tabindex="-1" role="dialog" aria-labelledby="confirmBindModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirmBindModalLabel">Confirm Transfer of Policy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 18px;"><%= fa_icon "exclamation-triangle", color: "Orange", size: "lg" %>Warning: You are binding a <b>transfer</b> application</div>
+        <br>
+        <div style="font-size: 18px;">This means that by binding this application you will also cancel <%= link_to "this policy", policy_detail_path(id: transferred_id), target: :_blank %></div>
+        <br>
+        <div class="modal-footer" style="display: grid; grid-template-columns: 2fr 1fr 2fr; grid-gap: 1em;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div></div>
+          <button id="confirmBindModalSubmitButton" class="btn btn-success"><%= fa_icon("check-circle", type: :solid, text: " Confirm Bind policy") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

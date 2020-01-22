@@ -1,0 +1,31 @@
+<div class="modal" id="editTransactionModal" tabindex="-1" role="dialog" aria-labelledby="editTransactionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editTransactionModalLabel">Edit Agent Comments</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for :transaction_info, url: edit_transaction_path, method: :patch, id: "editTransactionForm" do |f| %>
+
+          <div style="display: grid; grid-template-columns: 3fr 7fr; grid-gap: 1em;">
+            <div>
+              <%= f.label :agent_comments, 'Agent comments:' %>
+              <div style="font-size: 12px;">
+                <p><b>Note:</b> This field is for the <b><%= object.transaction_type %></b> transaction of this policy.</p>
+                <p>This is not the agent comments printed on certificates. Agent comments printed on certificates cannot be edited.</p>
+              </div>
+            </div>
+            <%= f.text_area :agent_comments, value: object.agent_comments, size: "24x11", class: 'form-control' %>
+            <%= f.hidden_field :id, value: object.id %>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="editTransactionModalSubmitButton" class="btn btn-success"><%= fa_icon("save", type: :solid, text: " Save Changes") %></button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

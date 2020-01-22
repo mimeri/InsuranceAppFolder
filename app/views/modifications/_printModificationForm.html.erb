@@ -1,0 +1,10 @@
+<%= form_for :modified_printpdf, url: print_modified_path do |f| %>
+  <%= f.hidden_field :version_id, value: object.id %>
+  <%= f.hidden_field :transaction_id, value: @new_transaction.id %>
+  <%= f.hidden_field :policy_id, value: @policy.id %>
+  <%= f.hidden_field :customer_id, value: @policy.customer.id %>
+  <button type="submit" name="commit" value="Print Certificate of Insurance" class="btn btn-secondary" title="Will print form as it was just before this modification"
+          data-confirm="Click 'OK' to print the broker's copy of the Certificate of Insurance. This will print the values that existed in the system prior to this modification" style="float: right;">
+    <%= fa_icon("print", type: :solid, text: " Print Certificate of Insurance") %>
+  </button>
+<% end %>

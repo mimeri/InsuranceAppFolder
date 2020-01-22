@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      <a data-toggle="collapse" data-parent="#collapseCustomer" aria-expanded="true" aria-controls="collapseCustomer" href="#collapseCustomer">
+        <i class="fa fa-chevron-circle-up fa-lg"></i>
+        <i class="fa fa-chevron-circle-down fa-lg"></i>
+        Customer Details: <%= @policy.customer.name %>
+      </a>
+    </h4>
+  </div>
+  <div id="collapseCustomer" class="card-body collapse show">
+    <%= render 'policy_detail/customerInfo', object: @policy.customer %>
+
+    <button id="editCustomerModalButton" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editCustomerModal">
+      <%= fa_icon("user-edit", type: :solid, text: " Edit Customer Info") %>
+    </button>
+
+    <div style="float: right;">
+      <%= link_to fa_icon("external-link-alt", type: :solid, text: " Create new policy with this customer"), new_policy_same_customer_path(id: @policy.customer.id), method: 'post', class: "btn btn-primary" %>
+    </div>
+
+  </div>
+</div>

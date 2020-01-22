@@ -1,0 +1,75 @@
+<%= javascript_include_tag 'jquery.dataTables.yadcf' %>
+<%= javascript_include_tag 'search_policy' %>
+
+<% provide(:title, "Search Transaction") %>
+
+<%= render 'search_policy/modals/confirmUpdateAllTransactions' %>
+
+<div id="searchPolicyTableDiv">
+
+  <div style="display: grid; grid-template-columns: 250px minmax(350px, 1fr) 250px;">
+    <div></div>
+    <h1>Search Transaction</h1>
+    <div style="position: relative;">
+
+      <button id="confirmUpdateAllTransactionsModalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUpdateAllTransactionsModal">
+        <%= fa_icon("sync", type: :solid, text: " Update All Transactions") %>
+      </button>
+
+    </div>
+  </div>
+
+  <br>
+
+  <%= render 'search_policy/dateFilterForm' %>
+
+  <table id="policy_table" class="table table-hover" style="table-layout: fixed;">
+    <thead>
+    <tr>
+      <th>Policy ID</th>
+      <th>Transaction Type</th>
+      <th>Insured Name</th>
+      <th>Policy Status</th>
+      <th>Coverage Type</th>
+      <th>Effective</th>
+      <th>Expiry</th>
+      <th>Vehicle</th>
+      <th>Billing Type</th>
+      <th>VIN</th>
+      <th>Reg #</th>
+      <th>Branch</th>
+      <th>Created by</th>
+      <th>Created</th>
+      <th>Snap Status</th>
+      <th>Snap Quote Number</th>
+    </tr>
+    </thead>
+
+    <tbody></tbody>
+
+    <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </tfoot>
+
+  </table>
+</div>
+
+
+

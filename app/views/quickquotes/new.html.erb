@@ -1,0 +1,25 @@
+<% provide(:title, "Get a quick quote") %>
+<h1>Get a quick quote</h1>
+
+<div id="quickquote_success_msg">
+
+</div>
+
+<div id="quickquote_error_msg" >
+
+</div>
+
+
+<div class="wrapper_1_1">
+
+  <div>
+    <%= render partial: 'form', quickquote: @quickquote %>
+    <br>
+    <br>
+  </div>
+
+  <div id="quickquote_result">
+  </div>
+
+</div>
+

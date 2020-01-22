@@ -1,0 +1,36 @@
+<div style="display: grid; grid-template-columns: 3fr 2fr; grid-gap: 1em;">
+  <table class="table narrow-transaction-details">
+    <tr>
+      <td><b>Transaction ID: </b></td>
+      <td><%= object.id %></td>
+    </tr>
+    <tr>
+      <td><b>Transaction type: </b></td>
+      <td><%= object.transaction_type.capitalize %></td>
+    </tr>
+    <tr>
+      <td><b>Cancellation reason: </b></td>
+      <td><%= object.transaction_reason %></td>
+    </tr>
+    <tr>
+      <td><b>Cancellation effective date: </b></td>
+      <td><%= object.effective_date.strftime("%b %-d, %Y") %></td>
+    </tr>
+    <tr>
+      <td><b>Cancellation action taken on: </b></td>
+      <td><%= object.created_at.strftime("%b %-d, %Y %R") %> by <%= get_user_name(object.user_id) %></td>
+    </tr>
+    <tr>
+      <td><b>Agent comments: </b></td>
+      <td><%= object.agent_comments %></td>
+    </tr>
+  </table>
+
+  <div>
+    <% if @policy.is_cancelled %>
+      <%= render 'policy_detail/cancellationQuote', policy: @policy, transaction: @new_transaction, is_transfer: @policy.is_transferred, amount_refunded: @cancelled_transaction.total_premium, unpaid_balance: @policy.unpaid_balance %>
+    <% end %>
+  </div>
+
+</div>
+

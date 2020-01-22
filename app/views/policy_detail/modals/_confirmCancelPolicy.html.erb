@@ -1,0 +1,55 @@
+<div class="modal" id="confirmCancelPolicyModal" tabindex="-1" role="dialog" aria-labelledby="confirmCancelPolicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirmCancelPolicyModalLabel">Confirm cancellation of policy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 18px;"><%= fa_icon "exclamation-triangle", color: "Orange", size: "lg" %>Warning: this action cannot be undone</div>
+        <br>
+        <%= form_for :cancel_policy, url: cancel_policy_path, method: :delete, id: "confirmCancelPolicyForm" do |f| %>
+          <%= f.hidden_field :id, value: @policy.id %>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1em;">
+            <div>
+
+              <% if get_permission_level(current_user.id,@policy.broker_id) <= UNDERWRITER_LEVEL %>
+
+                <%= f.label :transaction_reason, "Cancellation reason:" %>
+                <%= f.select :transaction_reason, [CANCELLED_BY_CUSTOMER,CANCELLED_FOR_NON_PAYMENT], {}, class: "form-control" %>
+
+                <%= f.label :effective_date, "Effective date of cancel policy action:" %>
+                <div class="input-group" style="width: 50%;">
+                  <%= f.text_field :effective_date, data: {provide: 'datepicker'}, placeholder: 'Click here to select date', value: Date.current, class: 'form-control', style: 'display: inline' %>
+                </div>
+
+              <% else %>
+                <%= f.hidden_field :transaction_reason, value: CANCELLED_BY_CUSTOMER %>
+              <% end %>
+
+              <%= f.label :agent_comments, 'Agent comments (additional explanation for cancellation of policy):' %>
+              <%= f.text_area :agent_comments, size: "24x6", class: 'form-control' %>
+            </div>
+            <div id="cancel_quote_result">
+
+            </div>
+          </div>
+          <br>
+          <div style="font-size: 18px;">Are you sure you wish to cancel this policy?</div>
+          <br>
+          <div class="modal-footer" style="display: grid; grid-template-columns: 2fr 1fr 2fr; grid-gap: 1em;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Keep Policy</button>
+            <div></div>
+            <button id="confirmCancelPolicyModalSubmitButton" class="btn btn-danger"><%= fa_icon("ban", type: :solid, text: " Yes, Cancel Policy") %></button>
+          </div>
+        <% end %>
+        <%= form_with url: cancel_quote_path, html: {id: "cancel_quote_form"} do |f| %>
+          <%= f.hidden_field :id, value: @new_transaction.id %>
+          <%= f.hidden_field :effective_date %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

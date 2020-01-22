@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      <a data-toggle="collapse" data-parent="#collapseCancellationTransaction" aria-expanded="true" aria-controls="collapseCancellationTransaction" href="#collapseCancellationTransaction">
+        <i class="fa fa-chevron-circle-up fa-lg"></i>
+        <i class="fa fa-chevron-circle-down fa-lg"></i>
+        <%= get_transaction_type(object.transaction_type) %> Transaction Details
+      </a>
+    </h4>
+  </div>
+  <div id="collapseCancellationTransaction" class="card-body collapse show">
+    <%= render 'policy_detail/tabs/transactionCancelled', object: @cancelled_transaction, policy: @policy %>
+
+    <button id="editCancellationTransactionModalButton" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editCancellationTransactionModal">
+      <%= fa_icon("edit", type: :solid, text: " Edit Agent Comments") %>
+    </button>
+
+  </div>
+</div>

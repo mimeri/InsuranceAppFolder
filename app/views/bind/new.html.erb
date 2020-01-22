@@ -1,0 +1,31 @@
+<% provide(:title, "Bind policy") %>
+
+<h1>Bind transaction</h1>
+
+<div class="wrapper">
+  <div>
+    <%= render partial: 'verifyTransactionDetails' %>
+    <%= render partial: 'form' %>
+  </div>
+  <div>
+    <%= render 'shared/quote', policy: @policy, transaction: @transaction, monthly_payment: @new_application_params.monthly_payment %>
+  </div>
+</div>
+
+<%= render partial: 'formButtons' %>
+
+<% if @new_application_params.transferred_id.present? %>
+  <%= render 'bind/modals/confirmBindModal', transferred_id: @new_application_params.transferred_id %>
+<% end %>
+
+<% new_application_name = @new_application_params.name  %>
+<% policy_id_with_same_name = get_policy_id_with_same_name(new_application_name) %>
+<% if @new_application_params.customer_id.blank? and policy_id_with_same_name.present? %>
+  <%= render 'bind/modals/confirmSameName', name: new_application_name, policy_id_with_same_name: policy_id_with_same_name %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+    $('#bindFormButton').on('click', function() {
+        $('#bindForm').submit();
+    });
+</script>

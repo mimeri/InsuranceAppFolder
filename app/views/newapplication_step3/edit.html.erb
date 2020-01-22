@@ -1,0 +1,10 @@
+<%= javascript_include_tag 'newapplication_step3' %>
+
+<% provide(:title, "New policy - step 3 of 4") %>
+
+<% if @newapplication.application_type === "new" %>
+  <%= render partial: 'form' %>
+<% else %>
+  <%= render partial: 'formwithoutcustomer' %>
+<% end %>
+

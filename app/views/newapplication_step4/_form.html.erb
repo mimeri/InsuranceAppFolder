@@ -1,0 +1,62 @@
+<% provide(:title, "New policy - step 4 of 4") %>
+
+<%= render 'shared/error_messages', object: @newapplication %>
+
+<%= form_for @newapplication, as: :newapplication, url: newapplication_step4_path do |f| %>
+
+  <div class="button-wrapper">
+    <div>
+      <div>
+        <div>
+          <h1 style="padding-bottom: 5px;">New Auto Replacement Cost Policy - Review and complete</h1>
+          <div class="card border-warning" style="background-color: lightgrey; border: solid;">
+            <div class="card-body" style="padding: 5px;">
+              <p class="card-text"><strong>You are now ready to complete the application process</strong><br/>
+                Please verify that details shown below are correct and click <strong>'Complete'</strong> button to proceed to policy issuance.
+                If you wish to make changes, click <strong>'<< Previous'</strong> button to go back and amend the data as required.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="wrapper_1_1">
+        <div>
+          <%= render partial: 'review' %>
+        </div>
+        <div>
+          <%= f.label :agent_comments, 'Agent comments ' %><p style="display: inline-block; font-size: 16px; font-style: italic; font-weight: bold; color: red;">&nbsp;(for internal use only):</p>
+          <%= f.text_area :agent_comments, size: "24x11", class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrapper_1_1">
+      <div></div>
+      <div class="row">
+        <div class="col-md-4 btn-padding">
+          <button type="submit" name="commit" value="<< Previous" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-chevron-circle-left"></i>
+            Previous
+          </button>
+        </div>
+        <div class="col-md-4 btn-padding">
+          <button type="submit" name="commit" value="Complete" class="btn btn-success" style="width: 100%;">
+            <i class="fas fa-check"></i>
+            Complete
+          </button>
+        </div>
+        <div class="col-md-4 btn-padding">
+          <button type="submit" name="commit" value="Save" class="btn btn-secondary" data-confirm="Click 'OK' to confirm saving the application. This will direct you to the main page" style="width: 100%;">
+            <i class="fas fa-save"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Step 4</div>
+</div>

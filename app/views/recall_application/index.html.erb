@@ -1,0 +1,47 @@
+<%= javascript_include_tag 'jquery.dataTables.yadcf' %>
+<%= javascript_include_tag 'recall_application' %>
+
+<% provide(:title, "Search for saved application") %>
+
+<h1>Search for saved application</h1>
+
+<br>
+
+<%= render 'recall_application/dateFilterForm' %>
+
+<table id="recall_application_table" class="table table-hover" style="table-layout: fixed;">
+  <thead>
+    <tr>
+      <th>Insured Name</th>
+      <th>Status</th>
+      <th>Coverage Type</th>
+      <th>Vehicle</th>
+      <th>Billing Type</th>
+      <th>VIN</th>
+      <th>Reg #</th>
+      <th>Branch</th>
+      <th>Last Updated By</th>
+      <th>Last Updated</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+
+  <tbody></tbody>
+
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+
+</table>

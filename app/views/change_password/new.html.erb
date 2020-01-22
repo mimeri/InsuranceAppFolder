@@ -1,0 +1,29 @@
+<% provide(:title, "Change password") %>
+
+<h1>Change password</h1>
+<br>
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <%= form_for @user, as: :change_password, url: change_password_index_path, method: :create do |f| %>
+
+      <%= render 'shared/error_messages', object: @user %>
+
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, placeholder: "Enter your current password", class: 'form-control' %>
+
+      <%= f.label :password, "New password" %>
+      <%= f.password_field :password, placeholder: "New password", class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "New password confirmation" %>
+      <%= f.password_field :password_confirmation, placeholder: "Re-enter new password", class: 'form-control' %>
+      <br>
+      <%= f.submit "Change password", class: 'btn btn-primary' %>
+
+    <% end %>
+
+  </div>
+  <div class="col-md-3"></div>
+</div>
+

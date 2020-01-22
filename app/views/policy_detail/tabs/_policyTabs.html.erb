@@ -1,0 +1,27 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="transaction_detail_tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="vehicle-tab" data-toggle="tab" href="#vehicle" role="tab" aria-controls="vehicle" aria-selected="true">Vehicle and Insurance</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="coverage-tab" data-toggle="tab" href="#coverage" role="tab" aria-controls="coverage" aria-selected="false">Policy</a>
+  </li>
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" id="claims-tab" data-toggle="tab" href="#claims" role="tab" aria-controls="claims" aria-selected="false">Claims</a>-->
+<!--  </li>-->
+</ul>
+
+<br>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="vehicle" role="tabpanel" aria-labelledby="vehicle-tab">
+    <%= render 'policy_detail/tabs/vehicle' %>
+  </div>
+  <div class="tab-pane" id="coverage" role="tabpanel" aria-labelledby="coverage-tab">
+    <%= render 'policy_detail/tabs/policy' %>
+  </div>
+  <div class="tab-pane" id="claims" role="tabpanel" aria-labelledby="claims-tab">
+    <%= render 'policy_detail/tabs/claims' %>
+  </div>
+</div>

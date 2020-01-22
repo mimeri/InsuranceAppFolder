@@ -1,0 +1,51 @@
+<div class="modal" id="changePolicyModal" tabindex="-1" role="dialog" aria-labelledby="changePolicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="changePolicyModalLabel">Select a different policy by the same customer</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if @all_policies.count > 1 %>
+          <table class="table table-hover" style="table-layout: fixed;">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Policy ID</th>
+                <th style="width: 120px;">Status</th>
+                <th>Vehicle</th>
+                <th style="width: 230px;">Effective</th>
+                <th style="width: 100px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @all_policies.each do |p| %>
+                <% if p.id != @policy.id %>
+                  <% p.transactions.each do |t| %>
+                    <% if t.transaction_type === "new" %>
+                      <tr>
+                        <td style="width: 120px;"><%= p.id %></td>
+                        <td style="width: 120px;"><%= p.status.capitalize %></td>
+                        <td><%= p.vehicle %></td>
+                        <td style="width: 230px;"><%= t.effective_date.strftime("%b %-d, %Y") %> - <%= t.expiry_date.strftime("%b %-d, %Y") %></td>
+                        <td style="width: 100px;"><%= link_to fa_icon("arrow-alt-circle-right", style: "color: White", text: " Go"), policy_detail_path(id: p.id), method: 'get', class: "btn btn-success btn-sm" %></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="card-body bg-warning" style="padding: 5px;">
+            <p>There aren't any other policies</p>
+          </div>
+        <% end %>
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+</div>

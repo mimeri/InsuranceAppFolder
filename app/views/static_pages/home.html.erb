@@ -1,0 +1,42 @@
+<% provide(:title, "Home") %>
+<h1>Main menu</h1>
+
+<div style="display: grid; grid-template-columns: 1fr 3fr 1fr;">
+  <div></div>
+  <div>
+    <div>
+      <h4>New application</h4>
+      <%= link_to fa_icon("external-link-alt", type: :solid, text: " Start a new application"), new_newapplication_step1_path, action: 'new', data: {turbolinks: false}, class: 'form-control btn bg-light'%>
+    </div>
+    <br>
+    <div>
+      <h4>Search</h4>
+      <%= link_to fa_icon("search", type: :solid, text: " Search transaction"), search_policy_index_path, data: {turbolinks: false}, class: 'form-control btn bg-light'%>
+      <%= link_to fa_icon("search", type: :solid, text: " Search for saved application"), recall_application_index_path, data: {turbolinks: false}, class: 'form-control btn bg-light'%>
+      <%= link_to fa_icon("dollar-sign", type: :solid, text: " Get a quick quote"), quickquotes_path, class: 'form-control btn bg-light'%>
+    </div>
+    <br>
+    <div>
+      <h4>Generate reports</h4>
+      <%= link_to fa_icon("file", type: :solid, text: " Transactions report"), transaction_reports_path, method: :get, class: 'form-control btn bg-light' %>    </div>
+    <br>
+    <div>
+      <h4>Administration</h4>
+      <%= link_to fa_icon("key", type: :solid, text: " Change password"), change_password_path, method: :get, class: 'form-control btn bg-light' %>
+    </div>
+    <br>
+    <div>
+      <h4>Downloads</h4>
+      <%= form_for :download, url: download_path do |f| %>
+        <div class="form-inline">
+          <%= f.select :download_form, [['Release of interest form','release_of_interest'],['Hayward Rate Cards','hayward_rate_cards']], {prompt: '(select)'}, class: 'form-control', style: 'width: 400px;' %>
+          <button id="downloadButton" formtarget="_blank" type="submit" name="commit" value="Download" class="btn btn-primary" style="width: 120px;">
+            <i class="fas fa-file-download"></i>
+            Download
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div></div>
+</div>

@@ -1,0 +1,51 @@
+<div class="modal" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Edit Customer Info</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for :customer_info, url: edit_customer_path, method: :patch, id: "editCustomerForm" do |f| %>
+          <div style="display: grid; grid-template-columns: 3fr 7fr; grid-gap: 1em;">
+            <%= f.label :insured_type, 'Insured type:' %>
+            <%= f.select :insured_type, ['Person','Company'], {selected: @policy.customer.insured_type}, {class: 'form-control'} %>
+
+            <%= f.label :first_name, 'First name:', id: "customer_info_first_name_label"%>
+            <%= f.text_field :first_name, value: @policy.customer.first_name, class: 'form-control' %>
+
+            <%= f.label :last_name, 'Last name:', class: 'insured_last_name' %>
+            <%= f.text_field :last_name, value: @policy.customer.last_name, class: 'form-control insured_last_name' %>
+
+            <%= f.label :address, 'Mailing address:' %>
+            <%= f.text_field :address, value: @policy.customer.address, class: 'form-control' %>
+
+            <%= f.label :city, 'City/Province' %>
+            <div class="wrapper" style="grid-template-columns: 3fr 1fr; grid-gap:1em;">
+              <%= f.text_field :city, value: @policy.customer.city, class: 'form-control' %>
+              <%= f.select :province, ['BC'], value: @policy.customer.province, class: 'form-control' %>
+            </div>
+
+            <%= f.label :postal_code, 'Postal code:' %>
+            <%= f.text_field :postal_code, value: @policy.customer.postal_code, class: 'form-control' %>
+
+            <%= f.label :phone, 'Phone:' %>
+            <%= f.text_field :phone, maxlength: 10, value: @policy.customer.phone, data: { numeric: true }, class: 'form-control' %>
+
+            <%= f.label :email, 'Email:' %>
+            <%= f.email_field :email, value: @policy.customer.email, class: 'form-control' %>
+
+            <%= f.hidden_field :id, value: @policy.id %>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            <button id="editCustomerModalSubmitButton" class="btn btn-success"><%= fa_icon("save", type: :solid, text: " Save Changes") %></button>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

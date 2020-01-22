@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-2 btn-padding">
+    <%= link_to(fa_icon("edit", type: :solid, text: " Edit application"), recall_application_path(id: @new_application_params.id), method: 'post', data: {turbolinks: false}, class: 'btn btn-secondary', style: 'width: 100%;') %>
+  </div>
+  <div class="col-md-8 btn-padding"></div>
+  <div class="col-md-2 btn-padding">
+    <% policy_id_with_same_name = get_policy_id_with_same_name(@new_application_params.name) %>
+    <% if @new_application_params.transferred_id.present? %>
+      <button id="confirmBindModalButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmBindModal" style="width: 100%;">
+        <%= fa_icon("check-circle", type: :solid, text: " Bind policy") %>
+      </button>
+    <% elsif @new_application_params.customer_id.blank? and policy_id_with_same_name.present? %>
+      <button id="confirmSameNameModalButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmSameNameModal" style="width: 100%;">
+        <%= fa_icon("check-circle", type: :solid, text: " Bind policy") %>
+      </button>
+    <% else %>
+      <button id="bindFormButton" class="btn btn-success" style="width: 100%;">
+        <%= fa_icon("check-circle", type: :solid, text: " Bind policy") %>
+      </button>
+    <% end %>
+  </div>
+</div>

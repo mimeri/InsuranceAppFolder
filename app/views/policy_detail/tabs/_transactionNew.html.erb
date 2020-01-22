@@ -1,0 +1,18 @@
+<table class="table narrow-transaction-details">
+  <tr>
+    <td><b>Transaction ID: </b></td>
+    <td><%= object.id %></td>
+  </tr>
+  <tr>
+    <td><b>Transaction type: </b></td>
+    <td><%= object.transaction_type.capitalize %></td>
+  </tr>
+  <tr>
+    <td><b>Bound: </b></td>
+    <td><%= object.created_at.strftime("%b %-d, %Y %R") %> by <%= get_user_name(object.user_id) %></td>
+  </tr>
+  <tr>
+    <td><b>Agent Comments: </b></td>
+    <td><%= object.agent_comments %></td>
+  </tr>
+</table>

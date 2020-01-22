@@ -1,0 +1,18 @@
+<%= form_for :bind_form, url: bind_path, html: {id: "bindForm"} do |f| %>
+
+  <% if @new_application_params.billing_type === BROKER_BILL %>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; grid-gap: 0.5em;">
+      <%= f.label :payment_method, 'Payment method:' %>
+      <%= f.select :payment_method, PAYMENT_METHOD_ARRAY , {}, {class: 'form-control'} %>
+    </div>
+
+  <% elsif @new_application_params.billing_type === DIRECT_BILL %>
+    <%= f.hidden_field :payment_method, value: '' %>
+  <% end %>
+
+  <%= f.label :printed_agent_comments, 'Comments (will print on certificate):', style: 'font-weigh: bold' %>
+  <%= f.text_area :printed_agent_comments, size: "24x3", value: @new_application_params["agent_comments"], class: 'form-control' %>
+
+  <%= f.hidden_field :id, value: @new_application_params.id %>
+<% end %>

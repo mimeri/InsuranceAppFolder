@@ -1,0 +1,58 @@
+<%= stylesheet_link_tag 'policy_detail' %>
+
+<% provide(:title, "Policy details") %>
+
+<!-- Modals -->
+<%= render 'policy_detail/modals/editCustomerModal' %>
+<%= render 'policy_detail/modals/changePolicyModal' %>
+<%= render 'policy_detail/modals/confirmCancelPolicy' %>
+<%= render 'policy_detail/modals/confirmTransferPolicy' %>
+<%= render 'policy_detail/modals/confirmVoidPolicy' %>
+<%= render 'policy_detail/modals/editPolicyModal' %>
+<%= render 'policy_detail/modals/editTransactionModal', object: @new_transaction %>
+<%= render 'policy_detail/modals/printFormsModal' %>
+
+<h1>Policy Details</h1>
+
+<div>
+  <%= link_to fa_icon("arrow-circle-left", type: :solid, text: " Back to Search Transaction"), search_policy_index_path, data: {turbolinks: false}, class: "btn btn-primary" %>
+  <div style="float: right;">
+
+    <% if @policy.is_bound and @policy.billing_type === DIRECT_BILL %>
+      <% if @policy.payment_details_url != nil %>
+        <%= link_to fa_icon("check-square", type: :solid, text: "Finish SNAP Payment Details Form"), @policy.payment_details_url, class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+
+    <button id="printFormsModalButton" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#printFormsModal">
+      <%= fa_icon("print", type: :solid, text: " Print Forms") %>
+    </button>
+  </div>
+</div>
+
+<br>
+<% if @policy.is_not_accepted_by_snap %>
+  <%= render 'policy_detail/warning/SNAPWarningTemplate', text: "The activation of this policy has not yet been processed by SNAP." %>
+  <br>
+<% elsif @policy.is_not_cancelled_by_snap %>
+  <%= render 'policy_detail/warning/SNAPWarningTemplate', text: "The cancellation of this policy has not yet been processed by SNAP." %>
+  <br>
+<% end %>
+<%= render 'policy_detail/warning/statusWarning', policy: @policy, transferred_to: get_transferred_to(@policy.id) %>
+<% if has_modification %>
+  <%= render 'policy_detail/warning/previousChangesWarning' %>
+  <br>
+<% end %>
+<div>
+  <%= render partial: 'customerDetails' %>
+</div>
+<br>
+
+<%= render partial: 'policyDetails' %>
+<br>
+<%= render 'policy_detail/transactionDetails', object: @new_transaction %>
+<br>
+<% if @cancelled_transaction.present? %>
+  <%= render 'policy_detail/cancelledTransactionDetails', object: @cancelled_transaction %>
+  <%= render 'policy_detail/modals/editCancellationTransactionModal', object: @cancelled_transaction %>
+<% end %>

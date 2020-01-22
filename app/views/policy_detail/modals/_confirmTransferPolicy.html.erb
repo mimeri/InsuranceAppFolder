@@ -1,0 +1,43 @@
+<div class="modal" id="confirmTransferPolicyModal" tabindex="-1" role="dialog" aria-labelledby="confirmTransferPolicyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirmTransferPolicyModalLabel">Confirm transfer of policy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          This action will redirect you to creating a new application.
+          <br><br>
+          Cancellation of this current policy does not take effect until the new application is complete and bound.
+          <br><br>
+        </div>
+        <div>
+          <%= form_for :transfer_policy, url: transfer_policy_path, id: "confirmTransferPolicyForm" do |f| %>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1em;">
+              <div>
+                <%= f.hidden_field :id, value: @policy.id %>
+                <% amount_refunded = get_refunds(@new_transaction.id,Date.current).last %>
+                <%= f.hidden_field :transferred_premium, value: amount_refunded %>
+              </div>
+              <div>
+                <%= render 'policy_detail/cancellationQuote', policy: @policy, transaction: @new_transaction, is_transfer: true, amount_refunded: amount_refunded, unpaid_balance: 0 %>
+              </div>
+            </div>
+            <div>
+              Would you still like to transfer policy?
+              <br><br>
+            </div>
+            <div class="modal-footer" style="display: grid; grid-template-columns: 3fr 1fr 4fr; grid-gap: 1em;">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Keep Policy</button>
+              <div></div>
+              <button id="confirmTransferPolicyModalSubmitButton" class="btn btn-danger"><%= fa_icon("exchange-alt", type: :solid, text: " Yes, Transfer Policy") %></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

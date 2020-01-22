@@ -1,0 +1,299 @@
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+/* universal */
+
+body {
+  padding-top: 4em;
+  margin-bottom: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center{
+  display: grid;
+  place-items: center center;
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 2.3em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.3em;
+  margin-bottom: 0.3em;
+  text-align: left;
+  color: navy;
+}
+
+h3 {
+  font-size: 2em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 5px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+//.field_with_errors {
+//  @extend .is-invalid;
+//  .form-control {
+//    color: #a94442;
+//  }
+//}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 10px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+//////////////////////////////////////////
+
+h4 {
+  font-size: 22px;
+  color: darkblue;
+}
+
+.wrapper{
+  display:grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap:3em;
+}
+
+.wrapper_1_1{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(470px, 1fr));
+  grid-column-gap: 4em;
+}
+
+.form_div{
+  display:grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap:1em;
+}
+
+.form-control{
+  font-size: 16px;
+}
+
+label{
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+.thicker_border{
+  border-top: solid;
+  border-top-width: 2px;
+}
+
+.btn-group button{
+  float: left;
+}
+
+.button-wrapper{
+  display: grid;
+  grid-template-rows: 25fr 2fr;
+  //grid-gap: 1em;
+}
+
+.btn-padding{
+  padding: 5px;
+}
+
+.yadcf-filter{
+  font-size: 12px;
+  @extend .form-control;
+}
+
+div.datatables_wrapper{
+  width: 800px;
+  margin: 0 auto;
+}
+
+// For Policy details //////////////////////////////
+
+a[aria-expanded=true] .fa-chevron-circle-up {
+  display: none;
+}
+
+a[aria-expanded=false] .fa-chevron-circle-down {
+  display: none;
+}
+
+h5{
+  font-size: 16px;
+}
+
+.quickquote-table{
+  float: right;
+  width: 500px;
+  font-size: 16px;
+  text-align: right;
+}
+
+// Styling autocomplete
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #999;
+  cursor: default;
+  li {
+    background-color: #FFF;
+    border-top: solid 1px #DDD;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #000;
+      display: block;
+      padding: 3px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: #FFFCB2;
+    }
+  }
+}
+
+// removes extra stuff from autocomplete
+.ui-helper-hidden-accessible { position: absolute; left:-999em; }
+
+.picker__select--year{
+  @extend .form-control;
+  display: inline;
+  width: 30%;
+  min-height: 2.4em;
+}
+
+.picker__select--month{
+  @extend .form-control;
+  display: inline;
+  width: 30%;
+  min-height: 2.4em;
+}
+
+// hide general search (ignore, for keywords: General Search General search)
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: right;
+  visibility: hidden;
+}
+
+.dataTables_length{
+  max-width: 50px;
+  white-space:nowrap;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  line-height: 40px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+.progress{
+  margin-top: 10px;
+}
+
+.form-inline > * {
+  margin-right: 10px;
+}
+
+// for moving checkboxes to the left of label
+.move-left {
+  width: auto;
+  box-shadow: none;
+}

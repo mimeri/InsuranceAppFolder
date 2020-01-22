@@ -1,0 +1,57 @@
+<% provide(:title, "Transactions report") %>
+
+<h1>Transactions report</h1>
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+
+    <%= form_for :transaction_report, url: transaction_reports_path do |f| %>
+
+      <%= f.label :broker_id, "Select branch:" %>
+      <%= f.select :broker_id, options_from_collection_for_select(@brokers, :id, :name), {}, class: 'form-control' %>
+
+      <%= f.label :attribute_filter, "Filter by attribute:" %>
+      <%= f.select :attribute_filter, TRANSACTION_DATE_FILTERS, {}, class: 'form-control' %>
+
+      <div id="transactionReportDateFields">
+        <%= f.label :date_range_type, "Date range:" %>
+        <%= f.select :date_range_type, TransactionReport::DATE_RANGE_TYPES, {}, class: 'form-control' %>
+
+        <br class="transaction-date-field">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2em;">
+
+          <div class="input-group transaction-date-field">
+            <%= f.text_field :start_custom_date, data: {provide: 'datepicker'}, placeholder: 'Start Date', class: 'form-control', style: 'display: inline' %>
+            <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
+          </div>
+
+          <div class="input-group transaction-date-field">
+            <%= f.text_field :end_custom_date, data: {provide: 'datepicker'}, placeholder: 'End Date', class: 'form-control', style: 'display: inline' %>
+            <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :keep_void_check, checked: false, class: "form-check-input move-left" %>Keep voided transactions in report</label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label"><%= f.check_box :update_table_check, checked: false, class: "form-check-input move-left" %>Update transaction table before generating report</label>
+      </div>
+
+      <br>
+
+      <button id="transactionReportSubmitButton" type="submit" name="commit" value="Generate Report" class="btn btn-primary" style="width: 100%;">
+        <i class="fa fa-file-download fa-lg" style="margin-right: 5px;"></i>
+        Generate Report
+      </button>
+
+
+    <% end %>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+

@@ -1,0 +1,81 @@
+<div class="wrapper_1_1">
+
+  <div>
+    <table class="table policy-table" style="text-align: left;">
+
+      <h2>Coverage Details</h2>
+
+      <tr>
+        <td><b>Policy ID: </b></td>
+        <td><%= @policy.id %></td>
+      </tr>
+
+      <tr>
+        <td><b>Issuing branch: </b></td>
+        <td><%= get_broker_name(@policy.broker_id) %></td>
+      </tr>
+
+      <tr>
+        <td><b>Policy period: </b></td>
+        <td><%= @new_transaction.effective_date.strftime("%b %-d, %Y") %> - <%= (@new_transaction.expiry_date - 1.day).strftime("%b %-d, %Y")  %><p style="font-size:14px; font-style: italic; display: inline;"> (days active: <%= get_days_active %> )</p> </td>
+      </tr>
+
+      <tr>
+        <td><b>Coverage type: </b></td>
+        <td><%= @policy.coverage_type %></td>
+      </tr>
+
+      <tr>
+        <td><b>Policy term: </b></td>
+        <td><%= @policy.policy_term %></td>
+      </tr>
+
+      <tr>
+        <td><b>OEM body parts: </b></td>
+        <td><%= @policy.oem_body_parts %></td>
+      </tr>
+
+      <tr>
+        <td><b>Billing type: </b></td>
+        <td><%= @policy.billing_type %></td>
+      </tr>
+
+      <% if @policy.billing_type === DIRECT_BILL %>
+        <tr>
+          <td><b>Financing term: </b></td>
+          <td><%= @policy.financing_term %></td>
+        </tr>
+      <% end %>
+
+      <% if @policy.payment_method.present? %>
+        <tr>
+          <td><b>Payment type: </b></td>
+          <td><%= @policy.payment_method %></td>
+        </tr>
+      <% end %>
+    </table>
+    <table class="table policy-table" style="text-align: left;">
+      <h2>Status</h2>
+      <tr>
+        <td><b>Policy status: </b></td>
+        <td>
+          <%= @policy.status.capitalize %>
+          <% if @policy.transferred_id.present? %>
+            <%= " via transfer from policy with ID: " %><%= link_to @policy.transferred_id, policy_detail_path(id: @policy.transferred_id), target: :_blank %>
+          <% end %>
+        </td>
+      </tr>
+      <% if @policy.billing_type === DIRECT_BILL %>
+        <tr>
+          <td><b>SNAP status: </b></td>
+          <td><%= @policy.snap_status %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div>
+    <%= render 'shared/quote', policy: @policy, transaction: @new_transaction, monthly_payment: nil %>
+  </div>
+
+</div>

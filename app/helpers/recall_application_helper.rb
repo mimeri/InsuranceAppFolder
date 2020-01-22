@@ -1,0 +1,2 @@
+module RecallApplicationHelper
+end

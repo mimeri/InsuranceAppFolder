@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag 'newapplication_step4' %>
+
+<table class="table">
+
+  <tr style="text-align: left;">
+    <td><b>Issuing branch: </b></td>
+    <td><%= get_broker_name(@newapplication.broker_id) %></td>
+  </tr>
+
+  <tr>
+    <td><b>Insured name: </b></td>
+    <td>
+      <% if @newapplication.first_name.present? %>
+        <%= @newapplication.first_name %>
+      <% end %>
+      <% if @newapplication.last_name.present? %>
+        <%= @newapplication.last_name %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>Vehicle: </b></td>
+    <td>
+      <% if @newapplication.model_year.present? and @newapplication.make.present? and @newapplication.model.present? %>
+        <%= @newapplication.model_year %><%= ' ' %><%= @newapplication.make %><%= ' ' %><%= @newapplication.model %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>Coverage type: </b></td>
+    <td>
+      <% if @newapplication.coverage_type.present? %>
+        <%= @newapplication.coverage_type %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>Policy Term:</b></td>
+    <td>
+      <% if @newapplication.policy_term.present? %>
+        <%= @newapplication.policy_term %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>OEM Body Parts:  </b></td>
+    <td>
+      <% if @newapplication.oem_body_parts.present? %>
+        <%= @newapplication.oem_body_parts %>
+      <% end %>
+    </td>
+  </tr>
+
+</table>
+

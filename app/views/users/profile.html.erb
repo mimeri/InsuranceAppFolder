@@ -1,0 +1,35 @@
+<% provide(:title, "User Profile") %>
+
+<h1>User Profile</h1>
+
+<h2>User Information</h2>
+<table class="table" style="width: 400px;">
+  <tr>
+    <td><b>Name: </b></td>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
+    <td><b>Username: </b></td>
+    <td><%= @user.username %></td>
+  </tr>
+</table>
+
+<h2>Employment</h2>
+<table class="table">
+  <tr>
+    <th>Broker Name</th>
+    <th>Permission Level</th>
+  </tr>
+  <% @user.employments.each do |e| %>
+    <tr>
+      <td><%= e.broker.name %></td>
+      <td><%= PERMISSION_LEVEL_HASH[e.permission_level] %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="card border-info" style="background-color: lightgrey; border: solid;">
+  <div class="card-body" style="padding: 5px;">
+    <p>This page is under construction. Suggestions on what you would like to see in the User Profile page are always welcome!</p>
+  </div>
+</div>

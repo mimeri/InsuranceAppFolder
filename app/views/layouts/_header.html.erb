@@ -1,0 +1,8 @@
+<nav class="navbar fixed-top navbar-light bg-light">
+  <a class="navbar-brand" href="/">Hayward POS</a>
+  <div class="form-inline">
+    <%= link_to fa_icon("user", type: :solid, text: " #{get_user_name(current_user.id)}"), users_profile_path, class: "btn btn-outline-secondary" %>
+    <%= link_to fa_icon("home", type: :solid, text: " Home"), main_path, class: "btn btn-outline-primary" %>
+    <%= link_to fa_icon("sign-out-alt", type: :solid, text: " Logout"), logout_path, method: :delete, class: "btn btn-outline-danger" %>
+  </div>
+</nav>

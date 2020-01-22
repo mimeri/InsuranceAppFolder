@@ -1,0 +1,28 @@
+.narrow-table{
+  table-layout: auto;
+}
+
+.narrow-table td:nth-child(odd){
+  width: 205px;
+}
+
+.narrow-transaction-details{
+  table-layout: auto;
+}
+
+.narrow-transaction-details td:nth-child(odd){
+  width: 250px;
+}
+
+.policy-tab{
+  table-layout: auto;
+}
+
+.policy-table td:nth-child(odd){
+  width: 155px;
+}
+
+.smaller{
+  width: 470px;
+}
+

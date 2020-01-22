@@ -1,0 +1,23 @@
+<% object_version = object %>
+<% object = object.reify %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width: 300px;">Field name</th>
+      <th style="width: 550px;">Field value before</th>
+      <th style="width: 550px;">Field value after</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% field_array.each do |field_name| %>
+      <% if field_changed(field_name,object_version,object_current) != nil %>
+        <tr>
+          <td style="width: 300px;"><%= field_name %></td>
+          <td style="width: 550px; color: red;"><%= object[field_name] %></td>
+          <td style="width: 550px; color: green;"><%= field_changed(field_name,object_version,object_current) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

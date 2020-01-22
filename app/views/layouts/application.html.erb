@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/shim' %>
+    <%= favicon_link_tag asset_path('hayward-favicon.png') %>
+    <meta name="turbolinks-cache-control" content="no-cache">
+  </head>
+  <body>
+    <%= render 'layouts/header' unless @no_header %>
+    <div class="container-fluid" style="width: 90%;">
+      <% if current_user and logged_in? %>
+        <%= auto_session_timeout_js %>
+      <% end %>
+      <% flash.each do |message_type, message| %>
+        <%= content_tag :div, class: "alert alert-#{message_type}" do -%>
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <% end -%>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+  <%= render 'layouts/footer' unless @no_footer %>
+</html>
