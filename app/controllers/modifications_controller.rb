@@ -1,17 +1,11 @@
 class ModificationsController < ApplicationController
 
-  before_action :check_employment, only: :index
+  include ModificationMethods
 
   def index
-    @new_transaction = @policy.transactions.find_by(transaction_type: "new")
-    @cancelled_transaction = @policy.transactions.find_by(transaction_type: CANCELLED)
+    @policy = Policy.find(params[:id])
+    access_denied_broker(@policy.broker_id)
+    @versions_array = load_versions(@policy)
   end
-
-  private
-
-    def check_employment
-      @policy = Policy.find(params[:id])
-      access_denied_broker(@policy.broker_id)
-    end
 
 end

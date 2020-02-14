@@ -27,9 +27,9 @@ class TransactionReportsController < ApplicationController
       params.require(:transaction_report).permit(:broker_id, :attribute_filter, :date_range_type, :start_custom_date, :end_custom_date, :update_table_check, :keep_void_check)
     end
 
-    def get_error_message(object)
+    def get_error_message(resource)
       error_array = []
-      object.errors.full_messages.each do |e|
+      resource.errors.full_messages.each do |e|
         error_array << e
       end
       error_array.join("<br/>")

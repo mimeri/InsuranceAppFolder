@@ -173,7 +173,7 @@ $(document).on('turbolinks:load', function() {
             $(submit_button).prop('disabled',true);
         }
 
-        create_pickadate(date_id,true);
+        create_datepicker(date_id,true);
 
         $(agent_comments_field).on('change paste keyup', function() {
             agent_comments_val = $(agent_comments_field).val();

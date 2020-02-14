@@ -1,6 +1,6 @@
 <% provide(:title, "New policy - step 4 of 4") %>
 
-<%= render 'shared/error_messages', object: @newapplication %>
+<%= render 'shared/error_messages', resource: @newapplication %>
 
 <%= form_for @newapplication, as: :newapplication, url: newapplication_step4_path do |f| %>
 

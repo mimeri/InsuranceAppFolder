@@ -1,8 +1,14 @@
-<nav class="navbar fixed-top navbar-light bg-light">
-  <a class="navbar-brand" href="/">Hayward POS</a>
+<nav class="navbar fixed-top navbar-light hayward-blue">
+  <a class="navbar-brand" href="/" style="color: white;">
+    <%= image_tag 'hayward-favicon.png', size: 27 %>
+    Hayward POS
+  </a>
   <div class="form-inline">
-    <%= link_to fa_icon("user", type: :solid, text: " #{get_user_name(current_user.id)}"), users_profile_path, class: "btn btn-outline-secondary" %>
-    <%= link_to fa_icon("home", type: :solid, text: " Home"), main_path, class: "btn btn-outline-primary" %>
-    <%= link_to fa_icon("sign-out-alt", type: :solid, text: " Logout"), logout_path, method: :delete, class: "btn btn-outline-danger" %>
+    <%#= link_to fa_icon("user", type: :solid, text: " #{get_user_name(current_user.id)}"), users_profile_path, class: "btn btn-outline-info" %>
+    <%#= link_to fa_icon("home", type: :solid, text: " Main Menu"), root_path, class: "btn btn-outline-primary" %>
+    <%#= link_to fa_icon("sign-out-alt", type: :solid, text: " Logout"), destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+    <%= link_to fa_icon("user", type: :solid, text: " #{get_user_name(current_user.id)}"), users_profile_path, class: "btn btn-info" %>
+    <%= link_to fa_icon("home", type: :solid, text: " Main Menu"), root_path, class: "btn btn-primary" %>
+    <%= link_to fa_icon("sign-out-alt", type: :solid, text: " Logout"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
   </div>
 </nav>

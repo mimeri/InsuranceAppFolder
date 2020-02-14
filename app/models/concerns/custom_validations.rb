@@ -32,20 +32,16 @@ module CustomValidations
     insured_type_validations
     first_name_validations
     last_name_validations
-    full_name_validations
     address_validations
     city_validations
     province_validations
     postal_code_validations
-    combined_validations
     phone_validations
     email_validations
     make_validations
     model_validations
-    make_model_validations
     vin_validations
     reg_num_validations
-    lessor_name_validations
     co_insured_validations
   end
 
@@ -317,42 +313,6 @@ module CustomValidations
 
 
 
-  # ## Old oem validations before Yes - x years change
-  # def oem_validations_ayy
-  #   if oem_body_parts.present?
-  #     oem_body_parts_options = [YES_3_YEARS,YES_2_YEARS,NOT_ELIGIBLE]
-  #
-  #     if oem_body_parts_options.include?(oem_body_parts) === false
-  #       errors.add(:oem_body_parts, IS_INVALID_REPORT)
-  #     elsif (model_year.present?) and (policy_term.present?)
-  #       model_year_val = model_year.to_i
-  #
-  #       oem_is_not_eligible = (oem_body_parts === NOT_ELIGIBLE)
-  #       oem_is_yes_3_years = (oem_body_parts === YES_3_YEARS)
-  #       oem_is_yes_2_years = (oem_body_parts === YES_2_YEARS)
-  #
-  #       valid_yes_3_years = ((coverage_type === FULL_REPLACEMENT) and (policy_term != "2 years") and (model_year_val >= Date.current.year))
-  #       valid_yes_2_years = ((coverage_type === FULL_REPLACEMENT) and (policy_term === "2 years" or model_year_val === (Date.current.year - 1)))
-  #       valid_not_eligible = ((coverage_type === LIMITED_DEPRECIATION) or (model_year_val < (Date.current.year - 1)))
-  #
-  #       valid_array = [valid_yes_3_years,valid_yes_2_years,valid_not_eligible]
-  #       true_count = 0
-  #       valid_array.each do |valid_bool|
-  #         true_count += 1 if valid_bool
-  #       end
-  #       errors.add(:base, "Invalid oem_body_parts validation. #{REPORT}") if true_count != 1
-  #
-  #       if (oem_is_not_eligible and !valid_not_eligible) or (oem_is_yes_3_years and !valid_yes_3_years) or (oem_is_yes_2_years and !valid_yes_2_years)
-  #         errors.add(:oem_body_parts, "is invalid according to other inputs. #{REPORT}")
-  #       end
-  #     end
-  #   else
-  #     errors.add(:oem_body_parts, CANT_BE_BLANK_REPORT)
-  #   end
-  # end
-
-
-
   def billing_type_validations
     if billing_type.present?
 
@@ -428,6 +388,7 @@ module CustomValidations
   end
 
 
+
   def expiry_date_validations
     if expiry_date.blank?
       errors.add(:expiry_date, CANT_BE_BLANK_REPORT)
@@ -438,7 +399,7 @@ module CustomValidations
 
   def insured_type_validations
     if insured_type.present?
-      if ["Person","Company"].include?(insured_type) === false
+      if Customer::INSURED_TYPES.include?(insured_type) === false
         errors.add(:insured_type, IS_INVALID_REPORT)
       end
     else
@@ -451,10 +412,6 @@ module CustomValidations
   def first_name_validations
     if first_name.blank?
       errors.add(:first_name, CANT_BE_BLANK)
-    else
-      if first_name.include?('"')
-        errors.add(:first_name, CANT_CONTAIN_DOUBLE_QUOTATIONS)
-      end
     end
   end
 
@@ -465,9 +422,6 @@ module CustomValidations
       if insured_type.present? and insured_type === "Company"
         errors.add(:last_name, "should not be present. #{REPORT}")
       end
-      if last_name.include?('"')
-        errors.add(:last_name, CANT_CONTAIN_DOUBLE_QUOTATIONS)
-      end
     else
       if insured_type.present? and insured_type === "Person"
         errors.add(:last_name, CANT_BE_BLANK)
@@ -477,32 +431,8 @@ module CustomValidations
 
 
 
-  def full_name_validations
-    full_name = ""
-    if first_name.present?
-      full_name += first_name
-    end
-    if last_name.present?
-      full_name += last_name
-    end
-    max_length = 52
-    if full_name.present? and full_name.length > max_length
-      errors.add(:base, "Full name exceeds #{max_length} characters and will overrun in the PDF sheet")
-    end
-  end
-
-
-
   def address_validations
-    if address.present?
-      max_length = 52
-      if address.length > max_length
-        errors.add(:address, "exceeds #{max_length} characters and will overrun in the PDF sheet")
-      end
-      if address.include?('"')
-        errors.add(:address, CANT_CONTAIN_DOUBLE_QUOTATIONS)
-      end
-    else
+    if address.blank?
       errors.add(:address, CANT_BE_BLANK)
     end
   end
@@ -512,10 +442,6 @@ module CustomValidations
   def city_validations
     if city.blank?
       errors.add(:city, CANT_BE_BLANK)
-    else
-      if city.include?('"')
-        errors.add(:city, CANT_CONTAIN_DOUBLE_QUOTATIONS)
-      end
     end
   end
 
@@ -523,8 +449,8 @@ module CustomValidations
 
   def province_validations
     if province.present?
-      if province != "BC"
-        errors.add(:province, "should be 'BC'")
+      if Customer::VALID_PROVINCES.include?(province) === false
+        errors.add(:province, IS_INVALID_REPORT)
       end
     else
       errors.add(:province, CANT_BE_BLANK)
@@ -535,7 +461,7 @@ module CustomValidations
 
   def postal_code_validations
     if postal_code.present?
-      errors.add(:base, "Invalid Canadian postal code") unless postal_code =~ /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i
+      errors.add(:base, "Invalid Canadian postal code") unless postal_code =~ Customer::VALID_POSTAL_CODE
     else
       errors.add(:postal_code, CANT_BE_BLANK)
     end
@@ -543,25 +469,13 @@ module CustomValidations
 
 
 
-  def combined_validations
-    if city.present? and province.present? and postal_code.present?
-      string = city + province + postal_code
-      max_length = 49
-      if string.length > max_length
-        errors.add(:base, "City, province, postal code combined exceed #{max_length} characters and will overrun in the PDF sheet")
-      end
-    end
-  end
-
-
-
   def phone_validations
     if phone.present?
-      max_length = 10
       if phone !~ /^[0-9]+$/
         errors.add(:phone, "must contain numbers only")
-      elsif phone.length != max_length
-        errors.add(:phone, "must have #{max_length} digits")
+      end
+      if phone.length != Customer::VALID_PHONE_LENGTH
+        errors.add(:phone, "must have #{Customer::VALID_PHONE_LENGTH} digits")
       end
     else
       errors.add(:phone, CANT_BE_BLANK)
@@ -616,18 +530,6 @@ module CustomValidations
 
 
 
-  def make_model_validations
-    if make.present? and model.present?
-      string = make + model
-      max_length = 47
-      if string.length > max_length
-        errors.add(:base, "Make and model combined exceed #{max_length} characters and will overrun in the PDF sheet")
-      end
-    end
-  end
-
-
-
   def vin_validations
     if vin.present?
       if vin !~ /^[a-hj-npr-zA-HJ-NPR-Z0-9]+$/ ## no I, O, or Q
@@ -654,20 +556,8 @@ module CustomValidations
 
 
 
-  def lessor_name_validations
-    if lessor_name.present?
-      max_length = 52
-      if lessor_name.length > max_length
-        errors.add(:lessor_name, "exceeds #{max_length} characters and will overrun in the PDF sheet")
-      end
-    end
-  end
-
-
-
   def co_insured_validations
     max_length = 255
-
     if co_insured_first_name.present?
       if co_insured_first_name.length > max_length
         errors.add(:co_insured_first_name, "exceeds #{max_length} and is too long")

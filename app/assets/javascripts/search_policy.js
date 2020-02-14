@@ -8,9 +8,9 @@ $(document).on('turbolinks:load', function() {
     const update_all_transactions_id = "#confirmUpdateAllTransactionsModalSubmit";
     const body_id = "#searchPolicyTableDiv";
 
-    create_pickadate(start_date_id);
+    create_datepicker(start_date_id);
 
-    create_pickadate(end_date_id);
+    create_datepicker(end_date_id);
 
     toggle_date_filter($(filter_type_id).val(),date_fields_div);
 

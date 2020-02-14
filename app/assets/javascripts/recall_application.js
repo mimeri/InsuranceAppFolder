@@ -6,9 +6,9 @@ $(document).on('turbolinks:load', function() {
     const date_fields_div = "#searchApplicationDateFields";
     const filter_type_id = "#recall_application_date_filter_type";
 
-    create_pickadate(start_date_id);
+    create_datepicker(start_date_id);
 
-    create_pickadate(end_date_id);
+    create_datepicker(end_date_id);
 
     toggle_date_filter($(filter_type_id).val(),date_fields_div);
 

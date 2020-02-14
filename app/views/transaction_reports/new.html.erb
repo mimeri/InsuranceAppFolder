@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'transaction_reports' %>
+
 <% provide(:title, "Transactions report") %>
 
 <h1>Transactions report</h1>
@@ -15,23 +17,19 @@
       <%= f.select :attribute_filter, TRANSACTION_DATE_FILTERS, {}, class: 'form-control' %>
 
       <div id="transactionReportDateFields">
+
         <%= f.label :date_range_type, "Date range:" %>
         <%= f.select :date_range_type, TransactionReport::DATE_RANGE_TYPES, {}, class: 'form-control' %>
 
-        <br class="transaction-date-field">
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2em;">
-
-          <div class="input-group transaction-date-field">
-            <%= f.text_field :start_custom_date, data: {provide: 'datepicker'}, placeholder: 'Start Date', class: 'form-control', style: 'display: inline' %>
-            <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
-          </div>
-
-          <div class="input-group transaction-date-field">
-            <%= f.text_field :end_custom_date, data: {provide: 'datepicker'}, placeholder: 'End Date', class: 'form-control', style: 'display: inline' %>
-            <i class="fa fa-calendar-alt fa-2x" style="margin-left: 5px;"></i>
+        <div class="input-group input-daterange transaction-date-field" style="padding-top: 10px; padding-bottom: 10px;">
+          <%= f.text_field :start_custom_date, data: {provide: 'datepicker'}, placeholder: 'Start Date', class: 'form-control' %>
+          <div class="input-group-text">to</div>
+          <%= f.text_field :end_custom_date, data: {provide: 'datepicker'}, placeholder: 'End Date', class: 'form-control' %>
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="far fa-calendar-alt fa-1x"></i></span>
           </div>
         </div>
+
       </div>
 
       <div class="form-check">

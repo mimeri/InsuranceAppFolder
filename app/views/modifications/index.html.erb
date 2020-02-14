@@ -5,10 +5,7 @@
 </div>
 <br>
 <div>
-  <% versions_array = load_versions %>
-  <% versions_array.each do |v| %>
+  <% @versions_array.each do |v| %>
     <%= render 'modifications/modificationCard', object: v %>
   <% end %>
 </div>
-
-

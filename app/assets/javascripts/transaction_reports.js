@@ -10,9 +10,9 @@ $(document).on('turbolinks:load', function() {
 
     let date_range_select_val = $(date_range_select_id).val();
 
-    create_pickadate(start_date_id);
+    create_datepicker(start_date_id);
 
-    create_pickadate(end_date_id);
+    create_datepicker(end_date_id);
 
     toggle_date_filter($(filter_type_id).val(),date_fields_div);
 

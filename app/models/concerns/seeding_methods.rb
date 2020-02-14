@@ -1,12 +1,16 @@
+Dir["#{Rails.root}/lib/test_data/*.rb"].each { |file| require file } # requires all files in lib/test_data
+
 module SeedingMethods
 
   extend ActiveSupport::Concern
 
   def seed_newapplications(number)
 
+    Faker::Config.locale = "en-CA"
+
     number.times do
       newapplication = Newapplication.new(
-          model_year: Faker::Number.between(2018,2019),
+          model_year: Faker::Number.between(Date.current.year,Date.current.year+1),
           purchase_date: Faker::Date.between(Date.current.beginning_of_year,Date.current-30),
           dealer_category: [TESLA,NOT_TESLA,OUT_OF_PROVINCE,PRIVATE_SALE].sample,
           vehicle_price: Faker::Number.between(30000,149000),
@@ -22,11 +26,11 @@ module SeedingMethods
           driver_factor: Faker::Number.between(0,0.999).round(3),
           coverage_type: [FULL_REPLACEMENT,LIMITED_DEPRECIATION].sample,
           policy_term: ["5 years","4 years","3 years","2 years"].sample,
-          billing_type: [BROKER_BILL,DIRECT_BILL].sample,
+          billing_type: [BROKER_BILL].sample, ## FIXXX
           address: Faker::Address.street_address,
           city: Faker::Address.city,
           province: "BC",
-          postal_code: "V3B8S2",
+          postal_code: TestData::PostalCode.new,
           phone: Faker::Number.between(6042000000,6049999999),
           email: Faker::Internet.email,
           make: Faker::Vehicle.make,
@@ -39,7 +43,7 @@ module SeedingMethods
           status: ["Complete","Incomplete"].sample,
           user_id: User.ids.sample)
 
-      newapplication.insured_type = ["Person","Company"].sample
+      newapplication.insured_type = Customer::INSURED_TYPES.sample
       if newapplication.billing_type === DIRECT_BILL
         newapplication.insured_type = "Person"
       end

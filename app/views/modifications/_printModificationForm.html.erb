@@ -1,6 +1,6 @@
 <%= form_for :modified_printpdf, url: print_modified_path do |f| %>
   <%= f.hidden_field :version_id, value: object.id %>
-  <%= f.hidden_field :transaction_id, value: @new_transaction.id %>
+  <%= f.hidden_field :transaction_id, value: @policy.transactions.find_by(transaction_type: "new").id %>
   <%= f.hidden_field :policy_id, value: @policy.id %>
   <%= f.hidden_field :customer_id, value: @policy.customer.id %>
   <button type="submit" name="commit" value="Print Certificate of Insurance" class="btn btn-secondary" title="Will print form as it was just before this modification"

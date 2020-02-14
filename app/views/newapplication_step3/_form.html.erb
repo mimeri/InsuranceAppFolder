@@ -1,4 +1,4 @@
-<%= render 'shared/error_messages', object: @newapplication %>
+<%= render 'shared/error_messages', resource: @newapplication %>
 
 <%= form_for @newapplication, as: :newapplication, url: newapplication_step3_path do |f| %>
 
@@ -17,7 +17,7 @@
 
           <div style="display: grid; grid-template-columns: 3fr 7fr; grid-gap: 1em;">
             <%= f.label :insured_type, 'Insured type:' %>
-            <%= f.select :insured_type, ['Person','Company'], {}, {class: 'form-control'} %>
+            <%= f.select :insured_type, Customer::INSURED_TYPES, {}, {class: 'form-control'} %>
 
             <%= f.label :first_name, 'First name:', id: "first_name_label"%>
             <%= f.text_field :first_name, class: 'form-control' %>

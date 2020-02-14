@@ -20,9 +20,7 @@
 //= require allow_numeric
 //= require font_awesome5
 //= require turbolinks
-//= require pickadate/picker
-//= require pickadate/picker.date
-//= require pickadate/picker.time
+//= require flatpickr
 
 // = require_tree .
 // = stub 'newapplication_step1.js'
@@ -31,3 +29,4 @@
 // = stub 'jquery.dataTables.yadcf.js'
 // = stub 'recall_application.js'
 // = stub 'search_policy.js'
+// = stub 'transaction_reports.js'

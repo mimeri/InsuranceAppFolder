@@ -3,22 +3,35 @@ class Customer < ApplicationRecord
   include CustomValidations
   has_many :policies
 
-  has_paper_trail on: [:update]
+  has_paper_trail on: [:update], ignore: [:name]
 
   before_save :normalize_blank_values
 
-  #step 3
+  # VALIDATIONS (Step 3)
   validate :insured_type_validations
   validate :first_name_validations
   validate :last_name_validations
-  validate :full_name_validations
   validate :address_validations
   validate :city_validations
   validate :province_validations
   validate :postal_code_validations
-  validate :combined_validations
   validate :phone_validations
   validate :email_validations
+
+  # CONSTANTS
+  INSURED_TYPES = %w(Person Company).freeze
+  VALID_PROVINCES = %w(BC).freeze
+  VALID_POSTAL_CODE = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i.freeze
+  VALID_PHONE_LENGTH = 10
+
+  # METHODS
+
+  ## Removes all spaces from postal_code before saving
+  def postal_code=(value)
+    if value.present?
+      self[:postal_code] = value.gsub(/\s+/,"")
+    end
+  end
 
   def self.to_csv(options = {})
     desired_columns = ["policy_id","policy_status","transaction_id","transaction_type","first_name","last_name","coverage_type", "policy_term",

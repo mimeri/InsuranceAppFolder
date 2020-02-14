@@ -15,8 +15,6 @@
  *= require datatables
  *= require jquery-ui
  *= require jquery-ui/autocomplete
- *= require pickadate/default
- *= require pickadate/default.date
- *= require pickadate/default.time
+ *= require flatpickr
  *= require_self
  */

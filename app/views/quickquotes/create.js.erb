@@ -15,5 +15,5 @@ $(result_div).append("<%= j render 'quickquotes/result' %>");
       $(success_msg).hide();
   }, 1500);
 <% else %>
-  $(error_msg).html(" <%= j render 'shared/error_messages', object: @quickquote %>");
+  $(error_msg).html(" <%= j render 'shared/error_messages', resource: @quickquote %>");
 <% end %>

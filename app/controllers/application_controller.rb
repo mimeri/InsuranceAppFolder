@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-  before_action :require_login, :set_cache_buster, :set_paper_trail_whodunnit
-  auto_session_timeout 4.hours
+  protect_from_forgery with: :exception, prepend: true
+  before_action :authenticate_user!, :set_cache_buster, :set_paper_trail_whodunnit
 
   include GeneralMethods
 
@@ -11,17 +10,15 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
-  private
+  def new
 
-    def user_params
-      params.require(:user).permit(:name, :username, :password,
-                                   :password_confirmation)
-    end
+  end
 
-    def require_login
-      unless logged_in?
-        redirect_to login_path
-      end
-    end
+  protected
+
+  # Overwriting the sign_out redirect path method
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
 
 end

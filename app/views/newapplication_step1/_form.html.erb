@@ -1,7 +1,7 @@
 <%= javascript_include_tag 'newapplication_step1' %>
 <% provide(:title, "New policy - step 1 of 4") %>
 
-<%= render 'shared/error_messages', object: @newapplication %>
+<%= render 'shared/error_messages', resource: @newapplication %>
 
 <%= form_for @newapplication, as: :newapplication, url: url, id: "newapplication_step1_form" do |f| %>
   <div class="button-wrapper">

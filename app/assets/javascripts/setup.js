@@ -152,21 +152,21 @@ function isEmptyOrSpaces(str){
     return str === null || str.match(/^\s*$/) !== null;
 }
 
-function create_pickadate(id,has_max){
+function create_datepicker(id,endDateIsToday){
 
-    if (typeof has_max === 'undefined'){
-        has_max = false;
+    flatpickr_obj =
+        flatpickr(id, {
+            altFormat: 'F j, Y',
+            altInput: true,
+            dateFormat: 'Y-m-d',
+            position: 'below'
+        });
+
+    if (endDateIsToday === true){
+        update_current_date();
+        flatpickr_obj.set('maxDate', current_date);
     }
 
-    $(id).pickadate({
-        today: '',
-        selectMonths: true,
-        selectYears: true,
-        format: 'yyyy-mm-dd',
-        formatSubmit: 'yyyy-mm-dd',
-        max: has_max,
-        hiddenSuffix: ''
-    });
 }
 
 function toggle_date_filter(string,date_fields_div){

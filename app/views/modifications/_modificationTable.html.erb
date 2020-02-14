@@ -1,6 +1,3 @@
-<% object_version = object %>
-<% object = object.reify %>
-
 <table class="table">
   <thead>
     <tr>
@@ -10,14 +7,16 @@
     </tr>
   </thead>
   <tbody>
-    <% field_array.each do |field_name| %>
-      <% if field_changed(field_name,object_version,object_current) != nil %>
+
+    <% if object.changeset.present? %>
+      <% object.changeset.each do |key,value| %>
         <tr>
-          <td style="width: 300px;"><%= field_name %></td>
-          <td style="width: 550px; color: red;"><%= object[field_name] %></td>
-          <td style="width: 550px; color: green;"><%= field_changed(field_name,object_version,object_current) %></td>
+          <td style="width: 300px;"><%= key %></td>
+          <td style="width: 550px; color: red;"><%= value.first %></td>
+          <td style="width: 550px; color: green;"><%= value.last %></td>
         </tr>
       <% end %>
     <% end %>
+
   </tbody>
 </table>

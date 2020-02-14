@@ -21,8 +21,11 @@
                 <%= f.select :transaction_reason, [CANCELLED_BY_CUSTOMER,CANCELLED_FOR_NON_PAYMENT], {}, class: "form-control" %>
 
                 <%= f.label :effective_date, "Effective date of cancel policy action:" %>
-                <div class="input-group" style="width: 50%;">
-                  <%= f.text_field :effective_date, data: {provide: 'datepicker'}, placeholder: 'Click here to select date', value: Date.current, class: 'form-control', style: 'display: inline' %>
+                <div class="input-group" style=" width: 50%;">
+                  <%= f.text_field :effective_date, data: {provide: 'datepicker'}, placeholder: 'Click here to select date', value: Date.current, class: 'form-control'%>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-calendar-alt fa-1x"></i></span>
+                  </div>
                 </div>
 
               <% else %>

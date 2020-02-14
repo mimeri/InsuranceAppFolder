@@ -35,10 +35,8 @@ class Policy < ApplicationRecord
   validate :driver_factor_validations
   validate :make_validations, on: :create
   validate :model_validations, on: :create
-  validate :make_model_validations, on: :create
   validate :vin_validations, on: :create
   validate :reg_num_validations, on: :create
-  validate :lessor_name_validations
   validate :co_insured_validations
 
   #bind step
